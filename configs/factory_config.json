@@ -1,0 +1,39 @@
+
+{
+    "_comments": {
+        "name": "工厂中文名称的英文对应",
+        "workshop": "车间在 organs 表中的字段名称",
+        "line": "流水线在 organs 表中的字段名称",
+        "indirect": "[工厂的辅助岗位列表]",
+        "workshops": ["车间列表"]
+    },
+
+    "01衢州": {
+        "name": "01quzhou",
+        "workshop": "sequence4",
+        "line": "sequence5",
+        "indirect": [],
+        "workshops": ["A车间", "B车间", "C车间", "D车间", "E车间", "常山", "姜家山", "莲花"]
+    },
+
+    "02龙游": {
+        "workshop": "sequence4",
+        "line": "",
+        "indirect": [],
+        "workshops": ["A车间", "B车间", "C车间", "D车间", "下宅车间", "十都车间", "塔石车间", "模环车间"]
+    },
+
+    "03越南": {
+        "workshop": "sequence4",
+        "line": "",
+        "indirect": [],
+        "workshops": ["A", "B", "C", "D", "E", "F", "G", "H"]
+    },
+
+    "04孟加拉": {
+        "workshop": "sequence4",
+        "line": "sequence5",
+        "indirect": [],
+        "workshops": ["1号工厂", "2号工厂", "3号工厂"]
+    }
+}

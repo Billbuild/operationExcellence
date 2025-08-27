@@ -1,0 +1,453 @@
+{% extends 'base/ancestor_factory_workshop.html' %}
+{% load template_filters %}
+
+<!-- 头文件，主要是 css 文件 -->
+{% block head %}
+<style>
+    .workshop-nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+    .workshop-nav ul {
+        display: flex;
+        gap: 15px;
+        padding: 0.5rem;
+        margin: 0;
+        list-style: none;
+    }
+    .workshop-nav a {
+        text-decoration: none;
+        color: #333;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        transition: 0.3s;
+    }
+    .workshop-nav a.active {
+        background: #2196F3;
+        color: white;
+    }
+    .workshop-section {
+        {#padding: 100px 20px 40px;#}
+        padding-top: 60px;
+        min-height: 100vh;
+    }
+
+    .production-table {
+        max-width: 600px;
+        margin: 20px auto;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+    .metric-name {
+        font-weight: 500;
+    }
+    .percentage-value::after {
+        content: "%";
+    }
+    .currency-value::after {
+        content: "元"
+    }
+    .hour-value::after {
+        content: "小时"
+    }
+    .minute-value::after {
+        content: "分钟"
+    }
+    .head-value::after {
+        content: "人"
+    }
+    .day-value::after {
+        content: "天"
+    }
+
+</style>
+
+{% endblock %}
+
+<!-- 标题 -->
+{% block title %}{% endblock %}
+
+<!-- 内容 -->
+{% block content %}
+<nav class="workshop-nav">
+    <ul>
+        {% for metric_en in metric_en_list %}
+        <li class="nav-item">
+            <a href="#section-{{ forloop.counter }}" class="nav-link {% if forloop.first %}active{% endif %}">
+                {{ metric_en }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
+<section id="section-1" class="workshop-section">
+    <div class="py-4">
+        <div class="card production-table">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ last_month }} {{ owe_en_name }} 当月运行</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover mb-0">
+                    <tbody>
+                        <tr>
+                            <td class="metric-name">{{ owe_en_name }}</td>
+                            <td class={{ owe_color }}>{{ owe | percentage}}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted text">线体利用率</td>
+                            <td class="pl-4 text-muted">{{ availability | percentage:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">直接生产效率</td>
+                            <td class="pl-4 text-muted">{{ performance | percentage:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">间接比</td>
+                            <td class="pl-4 text-muted">{{ indirects_rate | percentage }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">报废率</td>
+                            <td class="percentage-value pl-4 text-muted">{{ scrap_rate | decimal:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">工作时长</td>
+                            <td class="hour-value">{{ working_hours | currency:0 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">直接人工生产时长</td>
+                            <td class="pl-4 text-muted hour-value">{{ direct_available_hours | currency:0 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">间接人工生产时长</td>
+                            <td class="pl-4 text-muted hour-value">{{ indirect_available_hours | currency:0 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">停工等待</td>
+                            <td class="pl-4 text-muted hour-value">{{ downtime | currency:0 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">计划停工</td>
+                            <td class="pl-4 text-muted hour-value">{{ planned_break |currency:0 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">生产人数</td>
+                            <td class="head-value">{{ headcounts }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">直接人工数</td>
+                            <td class="pl-4 text-muted head-value">{{ directs }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">间接人工数</td>
+                            <td class="pl-4 text-muted head-value">{{ indirects }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">SAH</td>
+                            <td class="hour-value">{{ sah | currency:0 }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-2" class="workshop-section">
+    <div class="py-4">
+        <div class="card production-table">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ last_month }} Sam Cost 当月运行</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover mb-0">
+                    <tbody>
+                        <tr>
+                            <td class="metric-name">Sam Cost</td>
+                            <td class="{{ sam_cost_color }} currency-value">{{ sam_cost | decimal:3 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">CPM</td>
+                            <td class="currency-value">{{ cpm | decimal:3 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">SAH</td>
+                            <td class="hour-value">{{ sah | currency:0 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">SAH_m</td>
+                            <td class="minute-value">{{ sah_m | currency:0}}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">OWE</td>
+                            <td>{{ owe | percentage:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">制造费用</td>
+                            <td class="currency-value">{{ manufacturing_cost | currency:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">人员工资</td>
+                            <td class="pl-4 text-muted currency-value">{{ labor_cost | currency:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">房租</td>
+                            <td class="pl-4 text-muted currency-value">{{ rent | currency:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">设备折旧</td>
+                            <td class="pl-4 text-muted currency-value">{{ depreciation | currency:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">机物料</td>
+                            <td class="pl-4 text-muted currency-value">{{ maintenance_cost | currency:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">水电气</td>
+                            <td class="pl-4 text-muted currency-value">{{ utility_cost | currency:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">其他</td>
+                            <td class="pl-4 text-muted currency-value">{{ others | currency:2 }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-3" class="workshop-section">
+    <div class="py-4">
+        <div class="card production-table">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ last_month }} Lead Time 当月运行</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover mb-0">
+                    <tbody>
+                        <tr>
+                            <td class="metric-name">Lead Time</td>
+                            <td class="text-danger day-value">{{ lead_time | decimal:0 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">订单管理周期</td>
+                            <td class="day-value">{{ offer_cycle | decimal:0 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">采购单管理周期</td>
+                            <td class="day-value">{{ po_cycle | decimal:0 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">采购周期</td>
+                            <td class="day-value">{{ delivery_cycle | decimal:0 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">车间生产周期</td>
+                            <td class="day-value">{{ workshop_production_cycle | decimal:0 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="pl-4 text-muted metric-name">产线生产周期</td>
+                            <td class="pl-4 text-muted day-value">{{ line_product_cycle | decimal:0 }}</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">出货周期</td>
+                            <td class="day-value">{{ exit_cycle | decimal:0 }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-4" class="workshop-section">
+    <div class="py-4">
+        <div class="card production-table">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ last_month }} BTS 当月运行</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover mb-0">
+                    <tbody>
+                        <tr>
+                            <td class="metric-name">BTS</td>
+                            <td class="text-danger percentage-value">90</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">齐套率</td>
+                            <td class="percentage-value pl-4 text-muted">83.33</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">计划订单产量</td>
+                            <td>100,000</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">实际完成产量</td>
+                            <td>102,000</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">按时完成产量</td>
+                            <td>92,000</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">按序完成产量</td>
+                            <td>90,000</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">工单数量</td>
+                            <td>90</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">齐套数量</td>
+                            <td>75</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-5" class="workshop-section">
+    <div class="py-4">
+        <div class="card production-table">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ last_month }} HOT 当月运行</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover mb-0">
+                    <tbody>
+                        <tr>
+                            <td class="metric-name">HOT</td>
+                            <td class="text-danger percentage-value">85</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">准时入库率</td>
+                            <td class="percentage-value">97</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">准时出厂率</td>
+                            <td class="percentage-value">98</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">工单数量</td>
+                            <td>100,000</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">准时入库数量</td>
+                            <td>97,000</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">准时出厂数量</td>
+                            <td>98,000</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">订单数量</td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">准时到岸数量</td>
+                            <td>85</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-6" class="workshop-section">
+    <div class="py-4">
+        <div class="card production-table">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">{{ last_month }} RFT 当月运行</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover mb-0">
+                    <tbody>
+                        <tr>
+                            <td class="metric-name">RFT</td>
+                            <td class="text-danger percentage-value">95.9</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">生产数量</td>
+                            <td>100,000</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">检查数量</td>
+                            <td>98,000</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">合格数量</td>
+                            <td>94,000</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name">疵点数量</td>
+                            <td>4,000</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">疵点A数量</td>
+                            <td class="pl-4 text-muted">2,300</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">疵点B数量</td>
+                            <td class="pl-4 text-muted">800</td>
+                        </tr>
+                        <tr>
+                            <td class="metric-name pl-4 text-muted">疵点C数量</td>
+                            <td class="pl-4 text-muted">400</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+<!-- 右侧侧边栏 控制栏 -->
+{% block control-sidebar %}{% endblock %}
+
+<!-- 文件末尾的 JavaScript 文件-->
+{% block script %}
+<script>
+document.querySelectorAll('.nav-link').forEach(link => {
+    // 监听每个 .nav-link 的链接，
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+        // 获取链接对应的目标对象的id，比如 #section-1
+        const targetId = this.getAttribute('href');
+        // 获取目标对象
+        const targetSection = document.querySelector(targetId);
+        console.log(targetId)
+
+        // 获取所有的 .nav-link 链接，移除类 .active
+        document.querySelectorAll('.nav-link').forEach(item => item.classList.remove('active'));
+        // 在被点击的链接（当前链接）上添加类 .active
+        this.classList.add('active')
+
+        // 目标对象滚入视窗，目标对象的起始部位进入默认位置
+        targetSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+
+
+    });
+});
+
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('.workshop-section');
+    let currentSection = '';
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (window.scrollY >= sectionTop - 100) {
+            currentSection = section.getAttribute('id');
+        }
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${currentSection}`)
+    })
+});
+</script>
+{% endblock %}

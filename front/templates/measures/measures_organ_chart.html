@@ -1,0 +1,307 @@
+{% extends 'base/ancestor_factory_workshop.html' %}
+{% load template_filters %}
+
+<!-- 头文件，主要是 css 文件 -->
+{% block head %}
+<style>
+    .workshop-nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+    .workshop-nav ul {
+        display: flex;
+        gap: 20px;
+        padding: 1rem;
+        margin: 0;
+        list-style: none;
+        align-items: center;
+    }
+    .workshop-nav a {
+        text-decoration: none;
+        color: #333;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        transition: 0.3s;
+    }
+    .workshop-nav a.active {
+        background: #2196F3;
+        color: white;
+    }
+
+    .workshop-section {
+        padding: 100px 20px 40px;
+        min-height: 100vh;
+    }
+    .chart-container {
+        {#width: 100%;#}
+        height: 400px;
+    }
+
+    .chart-legend {
+        margin: 10px 0;
+        font-size: 14px;
+    }
+    .legend-item {
+        display: inline-block;
+        margin-right: 20px;
+    }
+    .legend-color {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin-right: 5px;
+    }
+</style>
+
+{% endblock %}
+
+<!-- 标题 -->
+{% block title %}{% endblock %}
+
+<!-- 内容 -->
+{% block content %}
+<nav class="workshop-nav">
+    <ul>
+        {% for workshop_name in workshop_names %}
+        <li><a href="#section-{{ forloop.counter }}" class="nav-link {% if forloop.first %}active{% endif %}">{{ workshop_name }}</a></li>
+        {% endfor %}
+        <li class="dropdown ml-auto">
+            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                Metrics
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#" data-metric="owe">OWE</a>
+                <a class="dropdown-item" href="#" data-metric="bts">BTS</a>
+                <a class="dropdown-item" href="#" data-metric="rft">RFT</a>
+                <a class="dropdown-item" href="#" data-metric="final_rework">Final Rework</a>
+            </div>
+        </li>
+    </ul>
+</nav>
+{% for workshop_data in workshop_dataset %}
+    <section id="section-{{ forloop.counter }}" class="container workshop-section">
+    {% for key, metric_data in workshop_data.items %}
+        <div class="part" id="part-{{ forloop.parentloop.counter }}-{{ metric_data.metric_name }}" {% if not forloop.first %}style="display: none;"{% endif %}>
+            <h4>{{ factory_name }} / {{ metric_data.workshop_name }} {{ metric_data.metric_en_name }} 折线图</h4>
+            <div class="chart-legend">
+                <span class="legend-item">
+                    <span class="legend-color" style="background: #4CAF50"></span>达标
+                </span>
+                <span class="legend-item">
+                    <span class="legend-color" style="background: #F44336"></span>未达标
+                </span>
+                <span class="legend-item">
+                    <span class="legend-color" style="border: 1px dashed #666"></span>目标 {{ metric_data.metric_target|percentage}}
+                </span>
+            </div>
+            <div class="chart-container" id="chart-{{ forloop.parentloop.counter }}-{{ metric_data.metric_name }}"></div>
+        </div>
+
+    {% endfor %}
+    </section>
+{% endfor %}
+{#{{ workshop_metric_data|json_script:"workshop-metric-data" }}#}
+{#{{ workshops|json_script:"workshops" }}#}
+{#{{ higher_better|json_script:"higher-better" }}#}
+{{ workshop_dataset|json_script:"workshop-dataset" }}
+{{ workshop_names|json_script:"workshop-names" }}
+{% endblock %}
+
+<!-- 右侧侧边栏 控制栏 -->
+{% block control-sidebar %}{% endblock %}
+
+<!-- 文件末尾的 JavaScript 文件-->
+{% block script %}
+<script src="{% static 'adminlte/plugins/echarts/dist/echarts.min.js' %}"></script>
+<script>
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+
+        targetSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+
+        document.querySelectorAll('.nav-link').forEach(item => item.classList.remove('active'));
+        this.classList.add('active')
+    });
+});
+
+function initChart(containerId, dates, values, metricTargetList, higherBetter=true) {
+    // containerId 图表的载体
+    // dates 列表 折线图的横轴日期数据
+    // values 列表 折线图的数据，运营指标的实际发生值
+    // metricTargetList 列表 目标值
+    // higher_better boolean 运营指标是否越高越好
+
+    // 横轴日期数据
+    // 横轴数据在横轴的显式
+    const formattedDates = dates.map(date => {
+        return date.split('-').slice(1).join('-');
+    });
+    // 运营指标的目标
+    const targetList = metricTargetList;
+
+    const chart = echarts.init(document.getElementById(containerId));
+    const option = {
+        tooltip: {
+            trigger: 'axis',
+            formatter: params => {
+                const date = params[0].name;
+                const actual = params[0].value;
+                const target = targetList[params[0].dataIndex]
+                return `日期：${date}<br/>
+                        实际：${(actual*100).toFixed(2)}%<br/>
+                        目标：${(target*100).toFixed(2)}%`;
+            }
+        },
+        xAxis: {
+            type: 'category',
+            data: formattedDates,
+            axisLabel: {
+                rotate: 45
+            },
+            name: '日期'
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            name: '实际发生值',
+            data: values,
+            type: 'line',
+            smooth: true,
+            symbolSize: 8,
+            itemStyle: {
+                color: params => {
+                    if(higherBetter) {
+                        return params.value >= targetList[params.dataIndex] ? '#4CAF50' : '#F44336';
+                    } else {
+                        return params.value <= targetList[params.dataIndex] ? '#4CAF50' : '#F44336';
+                    }
+                }
+            },
+            lineStyle: {
+                width: 2
+            }
+        }, {
+            name: '目标值',
+            type: 'line',
+            data: targetList,
+            symbol: 'none',
+            lineStyle: {
+                type: 'dashed',
+                color: '#666',
+                width: 1.5
+            }
+        }],
+        grid: {
+            bottom: '8%'
+        }
+    };
+    chart.setOption(option);
+
+    window.addEventListener('resize', () => {
+        chart.resize();
+    })
+}
+
+const workshopData = JSON.parse(document.getElementById('workshop-dataset').textContent);
+const workshops = JSON.parse(document.getElementById('workshop-names').textContent);
+// workshopMetricDate 示例： [{...}, {...}, ...]
+workshopData.forEach(function(workshop_data, index) {
+    Object.entries(workshop_data).forEach(function ([name, metric_data]) {
+        // forloop.counter 是从 1 开始，列表的 index 是从 0 开始
+        // 示例：chart-1-owe
+        const containerId = 'chart-' + (index + 1) + '-' + name;
+        const dates = metric_data['dates']
+        const values = metric_data['values'];
+        const targets = metric_data['targets']
+        const highBetter = metric_data['high_better']
+
+        initChart(containerId, dates, values, targets, highBetter)
+    })
+});
+
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('.workshop-section');
+    let currentSection = '';
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (window.scrollY >= sectionTop - 100) {
+            currentSection = section.getAttribute('id');
+        }
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${currentSection}`)
+    })
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+    dropdownItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // 获取车间导航中的 车间 元素
+            const activeNavItem = document.querySelector('.nav-link.active');
+            // 获取车间导航中的 车间 名称
+            const activeWorkshop = activeNavItem ? activeNavItem.textContent : null;
+            // 获取车间名称在 车间列表中的索引位置
+            const activeWorkshopIndex = workshops.indexOf(activeWorkshop);
+
+            // 获取运营指标导航中的 被点击元素的文本内容
+            const clickedMetric = e.target.textContent;
+            // 获取运营指标导航中的 被点击元素 data-metric 的值, 即 运营指标的变量名称，例如：owe
+            const metricName = e.target.dataset.metric;
+            // 获取运营指标导航中的 被点击元素的索引位置
+            const itemIndex = Array.from(dropdownItems).indexOf(e.target);
+
+            // 当前车间的图表part的 id 列表
+            const activeWorkshopPartIds = [
+                'part-' + (activeWorkshopIndex + 1) + '-' + 'owe',
+                'part-' + (activeWorkshopIndex + 1) + '-' + 'bts',
+                'part-' + (activeWorkshopIndex + 1) + '-' + 'rft',
+                'part-' + (activeWorkshopIndex + 1) + '-' + 'final_rework',
+            ];
+            // 点击的图表part id
+            const clickMetricPartId = 'part-' + (activeWorkshopIndex + 1) + '-' + metricName;
+            const clickMetricPart = document.getElementById(clickMetricPartId);
+
+            // 隐藏当前所有的图表容器
+            activeWorkshopPartIds.forEach(function (id) {
+                const chartPart = document.getElementById(id);
+                chartPart.style.display = 'none';
+            });
+            // 显示点击的图表容器
+            if(clickMetricPart) {
+                clickMetricPart.style.display = 'block';
+
+                // 点击的图表container id
+                const clickChartContainerId = 'chart-' + (activeWorkshopIndex + 1) + '-' + metricName;
+                const clickChartContainer = document.getElementById(clickChartContainerId);
+                if (clickChartContainer) {
+                    // 得到 clickChartContainer 承载的 echarts 实例
+                    const chart = echarts.getInstanceByDom(clickChartContainer);
+                    // 当 part 显示时，第一时间调整 chart 的尺寸
+                    setTimeout(() => {
+                        chart.resize();
+                    }, 0);
+                }
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

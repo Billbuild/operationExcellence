@@ -1,0 +1,136 @@
+{% extends 'base/ancestor_factory_workshop.html' %}
+
+<!-- 头文件，主要是 css 文件 -->
+{% block head %}
+<style>
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+.table {
+    font-size: 14px;
+}
+.table thead th {
+    border-top: none;
+    font-weight: 600;
+    color: #495057;
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+</style>
+{% endblock %}
+
+<!-- 标题 -->
+{% block title %}{% endblock %}
+
+<!-- 内容 -->
+{% block content %}
+<section class="mt-5">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <form id="searchForm" method="POST" action="{% url 'measures:target_line' %}">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="metricSearch" name="wo_number" placeholder="请输入单位编号：c/f/w+3位数字，比如 f001" title="单位编号格式应为c/f/w+3位数字">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">查询</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div id="errorAlert" class="col-6 alert alert-danger mt-3 d-none"></div>
+    </div>
+</section>
+<section id="targetLineResult" class="container mt-4 d-none">
+    <div class="d-flex justify-content-center align-items-center mb-4">
+        <h2 class="mb-0">单位运营目标</h2>
+    </div>
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>工厂</th>
+                            <th>车间</th>
+                            <th>运营指标</th>
+                            <th>运营目标</th>
+                            <th>设置时间</th>
+                        </tr>
+                    </thead>
+                    <tbody id="metricData">
+{#                        {% for data in local_metric_data %}#}
+{#                            <tr>#}
+{#                                <td>{{ data.factory }}</td>#}
+{#                                <td>{{ data.workshop }}</td>#}
+{#                                <td>{{ data.metric_en_name }}</td>#}
+{#                                <td>{{ data.metric_target }}</td>#}
+{#                                <td>2025-5-15</td>#}
+{#                            </tr>#}
+{#                        {% endfor %}#}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+<!-- 右侧侧边栏 控制栏 -->
+{% block control-sidebar %}{% endblock %}
+
+<!-- 文件末尾的 JavaScript 文件-->
+{% block script %}
+<script>
+$(document).ready(function () {
+    $('#searchForm').on('submit', function (e) {
+        e.preventDefault();
+
+        const organId = $('#metricSearch').val().trim();
+        const csrfToken = $('[name=csrfmiddlewaretoken]').val()
+
+        $('#errorAlert').addClass('d-none');
+        $('#targetLineResult').addClass('d-none');
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: {
+                'organ_id': organId
+                // 'csrfToken': csrfToken
+            },
+            success: function (response) {
+                if (response.error) {
+                    $('#errorAlert').removeClass('d-none').text(response.error);
+                    console.log(response.error)
+                    return;
+                }
+                $('#metricSearch').val('').blur();
+
+                let tbody = $('#metricData');
+
+                tbody.empty();
+
+
+                const metricData = response.local_metric_data;
+
+                $.each(metricData, function (index, item) {
+                    let row = $('<tr>');
+
+                    row.append($('<td>').text(item.factory));
+                    row.append($('<td>').text(item.workshop));
+                    row.append($('<td>').text(item.metric_en_name));
+                    row.append($('<td>').text(item.metric_target));
+                    row.append($('<td>').text('2025-5-15'));
+
+                    tbody.append(row);
+
+                    $('#targetLineResult').removeClass('d-none')
+                })
+            }
+        })
+    })
+});
+</script>
+{% endblock %}

@@ -1,0 +1,1778 @@
+[
+    {
+        "id": 1,
+        "organization": "c001",
+        "metric": "owe",
+        "metric_target": null
+    },
+    {
+        "id": 2,
+        "organization": "c001",
+        "metric": "sam_cost",
+        "metric_target": null
+    },
+    {
+        "id": 3,
+        "organization": "c001",
+        "metric": "wip",
+        "metric_target": null
+    },
+    {
+        "id": 4,
+        "organization": "c001",
+        "metric": "lead_time",
+        "metric_target": null
+    },
+    {
+        "id": 5,
+        "organization": "c001",
+        "metric": "bts",
+        "metric_target": null
+    },
+    {
+        "id": 6,
+        "organization": "c001",
+        "metric": "hot",
+        "metric_target": null
+    },
+    {
+        "id": 7,
+        "organization": "c001",
+        "metric": "rft",
+        "metric_target": null
+    },
+    {
+        "id": 8,
+        "organization": "c001",
+        "metric": "final_rework",
+        "metric_target": null
+    },
+    {
+        "id": 9,
+        "organization": "f001",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 10,
+        "organization": "f001",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 11,
+        "organization": "f001",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 12,
+        "organization": "f001",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 13,
+        "organization": "f001",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 14,
+        "organization": "f001",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 15,
+        "organization": "f001",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 16,
+        "organization": "f001",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 17,
+        "organization": "f002",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 18,
+        "organization": "f002",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 19,
+        "organization": "f002",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 20,
+        "organization": "f002",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 21,
+        "organization": "f002",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 22,
+        "organization": "f002",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 23,
+        "organization": "f002",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 24,
+        "organization": "f002",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 25,
+        "organization": "f003",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 26,
+        "organization": "f003",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 27,
+        "organization": "f003",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 28,
+        "organization": "f003",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 29,
+        "organization": "f003",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 30,
+        "organization": "f003",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 31,
+        "organization": "f003",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 32,
+        "organization": "f003",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 33,
+        "organization": "f004",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 34,
+        "organization": "f004",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 35,
+        "organization": "f004",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 36,
+        "organization": "f004",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 37,
+        "organization": "f004",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 38,
+        "organization": "f004",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 39,
+        "organization": "f004",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 40,
+        "organization": "f004",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 41,
+        "organization": "w001",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 42,
+        "organization": "w001",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 43,
+        "organization": "w001",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 44,
+        "organization": "w001",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 45,
+        "organization": "w001",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 46,
+        "organization": "w001",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 47,
+        "organization": "w001",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 48,
+        "organization": "w001",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 49,
+        "organization": "w002",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 50,
+        "organization": "w002",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 51,
+        "organization": "w002",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 52,
+        "organization": "w002",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 53,
+        "organization": "w002",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 54,
+        "organization": "w002",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 55,
+        "organization": "w002",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 56,
+        "organization": "w002",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 57,
+        "organization": "w003",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 58,
+        "organization": "w003",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 59,
+        "organization": "w003",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 60,
+        "organization": "w003",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 61,
+        "organization": "w003",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 62,
+        "organization": "w003",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 63,
+        "organization": "w003",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 64,
+        "organization": "w003",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 65,
+        "organization": "w004",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 66,
+        "organization": "w004",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 67,
+        "organization": "w004",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 68,
+        "organization": "w004",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 69,
+        "organization": "w004",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 70,
+        "organization": "w004",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 71,
+        "organization": "w004",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 72,
+        "organization": "w004",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 73,
+        "organization": "w005",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 74,
+        "organization": "w005",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 75,
+        "organization": "w005",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 76,
+        "organization": "w005",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 77,
+        "organization": "w005",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 78,
+        "organization": "w005",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 79,
+        "organization": "w005",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 80,
+        "organization": "w005",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 81,
+        "organization": "w006",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 82,
+        "organization": "w006",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 83,
+        "organization": "w006",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 84,
+        "organization": "w006",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 85,
+        "organization": "w006",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 86,
+        "organization": "w006",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 87,
+        "organization": "w006",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 88,
+        "organization": "w006",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 89,
+        "organization": "w007",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 90,
+        "organization": "w007",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 91,
+        "organization": "w007",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 92,
+        "organization": "w007",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 93,
+        "organization": "w007",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 94,
+        "organization": "w007",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 95,
+        "organization": "w007",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 96,
+        "organization": "w007",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 97,
+        "organization": "w008",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 98,
+        "organization": "w008",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 99,
+        "organization": "w008",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 100,
+        "organization": "w008",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 101,
+        "organization": "w008",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 102,
+        "organization": "w008",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 103,
+        "organization": "w008",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 104,
+        "organization": "w008",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 105,
+        "organization": "w009",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 106,
+        "organization": "w009",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 107,
+        "organization": "w009",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 108,
+        "organization": "w009",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 109,
+        "organization": "w009",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 110,
+        "organization": "w009",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 111,
+        "organization": "w009",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 112,
+        "organization": "w009",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 113,
+        "organization": "w010",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 114,
+        "organization": "w010",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 115,
+        "organization": "w010",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 116,
+        "organization": "w010",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 117,
+        "organization": "w010",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 118,
+        "organization": "w010",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 119,
+        "organization": "w010",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 120,
+        "organization": "w010",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 121,
+        "organization": "w011",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 122,
+        "organization": "w011",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 123,
+        "organization": "w011",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 124,
+        "organization": "w011",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 125,
+        "organization": "w011",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 126,
+        "organization": "w011",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 127,
+        "organization": "w011",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 128,
+        "organization": "w011",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 129,
+        "organization": "w012",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 130,
+        "organization": "w012",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 131,
+        "organization": "w012",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 132,
+        "organization": "w012",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 133,
+        "organization": "w012",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 134,
+        "organization": "w012",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 135,
+        "organization": "w012",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 136,
+        "organization": "w012",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 137,
+        "organization": "w013",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 138,
+        "organization": "w013",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 139,
+        "organization": "w013",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 140,
+        "organization": "w013",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 141,
+        "organization": "w013",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 142,
+        "organization": "w013",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 143,
+        "organization": "w013",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 144,
+        "organization": "w013",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 145,
+        "organization": "w014",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 146,
+        "organization": "w014",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 147,
+        "organization": "w014",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 148,
+        "organization": "w014",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 149,
+        "organization": "w014",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 150,
+        "organization": "w014",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 151,
+        "organization": "w014",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 152,
+        "organization": "w014",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 153,
+        "organization": "w015",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 154,
+        "organization": "w015",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 155,
+        "organization": "w015",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 156,
+        "organization": "w015",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 157,
+        "organization": "w015",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 158,
+        "organization": "w015",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 159,
+        "organization": "w015",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 160,
+        "organization": "w015",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 161,
+        "organization": "w016",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 162,
+        "organization": "w016",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 163,
+        "organization": "w016",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 164,
+        "organization": "w016",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 165,
+        "organization": "w016",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 166,
+        "organization": "w016",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 167,
+        "organization": "w016",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 168,
+        "organization": "w016",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 169,
+        "organization": "w017",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 170,
+        "organization": "w017",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 171,
+        "organization": "w017",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 172,
+        "organization": "w017",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 173,
+        "organization": "w017",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 174,
+        "organization": "w017",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 175,
+        "organization": "w017",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 176,
+        "organization": "w017",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 177,
+        "organization": "w018",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 178,
+        "organization": "w018",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 179,
+        "organization": "w018",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 180,
+        "organization": "w018",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 181,
+        "organization": "w018",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 182,
+        "organization": "w018",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 183,
+        "organization": "w018",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 184,
+        "organization": "w018",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 185,
+        "organization": "w019",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 186,
+        "organization": "w019",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 187,
+        "organization": "w019",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 188,
+        "organization": "w019",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 189,
+        "organization": "w019",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 190,
+        "organization": "w019",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 191,
+        "organization": "w019",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 192,
+        "organization": "w019",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 193,
+        "organization": "w020",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 194,
+        "organization": "w020",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 195,
+        "organization": "w020",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 196,
+        "organization": "w020",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 197,
+        "organization": "w020",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 198,
+        "organization": "w020",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 199,
+        "organization": "w020",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 200,
+        "organization": "w020",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 201,
+        "organization": "w021",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 202,
+        "organization": "w021",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 203,
+        "organization": "w021",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 204,
+        "organization": "w021",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 205,
+        "organization": "w021",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 206,
+        "organization": "w021",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 207,
+        "organization": "w021",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 208,
+        "organization": "w021",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 209,
+        "organization": "w022",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 210,
+        "organization": "w022",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 211,
+        "organization": "w022",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 212,
+        "organization": "w022",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 213,
+        "organization": "w022",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 214,
+        "organization": "w022",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 215,
+        "organization": "w022",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 216,
+        "organization": "w022",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 217,
+        "organization": "w023",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 218,
+        "organization": "w023",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 219,
+        "organization": "w023",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 220,
+        "organization": "w023",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 221,
+        "organization": "w023",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 222,
+        "organization": "w023",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 223,
+        "organization": "w023",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 224,
+        "organization": "w023",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 225,
+        "organization": "w024",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 226,
+        "organization": "w024",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 227,
+        "organization": "w024",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 228,
+        "organization": "w024",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 229,
+        "organization": "w024",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 230,
+        "organization": "w024",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 231,
+        "organization": "w024",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 232,
+        "organization": "w024",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 233,
+        "organization": "w025",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 234,
+        "organization": "w025",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 235,
+        "organization": "w025",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 236,
+        "organization": "w025",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 237,
+        "organization": "w025",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 238,
+        "organization": "w025",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 239,
+        "organization": "w025",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 240,
+        "organization": "w025",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 241,
+        "organization": "w026",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 242,
+        "organization": "w026",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 243,
+        "organization": "w026",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 244,
+        "organization": "w026",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 245,
+        "organization": "w026",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 246,
+        "organization": "w026",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 247,
+        "organization": "w026",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 248,
+        "organization": "w026",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 249,
+        "organization": "w027",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 250,
+        "organization": "w027",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 251,
+        "organization": "w027",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 252,
+        "organization": "w027",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 253,
+        "organization": "w027",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 254,
+        "organization": "w027",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 255,
+        "organization": "w027",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 256,
+        "organization": "w027",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 257,
+        "organization": "w028",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 258,
+        "organization": "w028",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 259,
+        "organization": "w028",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 260,
+        "organization": "w028",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 261,
+        "organization": "w028",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 262,
+        "organization": "w028",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 263,
+        "organization": "w028",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 264,
+        "organization": "w028",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 265,
+        "organization": "w029",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 266,
+        "organization": "w029",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 267,
+        "organization": "w029",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 268,
+        "organization": "w029",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 269,
+        "organization": "w029",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 270,
+        "organization": "w029",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 271,
+        "organization": "w029",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 272,
+        "organization": "w029",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 273,
+        "organization": "w030",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 274,
+        "organization": "w030",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 275,
+        "organization": "w030",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 276,
+        "organization": "w030",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 277,
+        "organization": "w030",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 278,
+        "organization": "w030",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 279,
+        "organization": "w030",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 280,
+        "organization": "w030",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 281,
+        "organization": "w031",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 282,
+        "organization": "w031",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 283,
+        "organization": "w031",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 284,
+        "organization": "w031",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 285,
+        "organization": "w031",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 286,
+        "organization": "w031",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 287,
+        "organization": "w031",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 288,
+        "organization": "w031",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    },
+    {
+        "id": 289,
+        "organization": "w032",
+        "metric": "owe",
+        "metric_target": 0.75
+    },
+    {
+        "id": 290,
+        "organization": "w032",
+        "metric": "sam_cost",
+        "metric_target": 0.8
+    },
+    {
+        "id": 291,
+        "organization": "w032",
+        "metric": "wip",
+        "metric_target": 14.0
+    },
+    {
+        "id": 292,
+        "organization": "w032",
+        "metric": "lead_time",
+        "metric_target": 14.0
+    },
+    {
+        "id": 293,
+        "organization": "w032",
+        "metric": "bts",
+        "metric_target": 0.92
+    },
+    {
+        "id": 294,
+        "organization": "w032",
+        "metric": "hot",
+        "metric_target": 0.95
+    },
+    {
+        "id": 295,
+        "organization": "w032",
+        "metric": "rft",
+        "metric_target": 0.93
+    },
+    {
+        "id": 296,
+        "organization": "w032",
+        "metric": "final_rework",
+        "metric_target": 0.02
+    }
+]

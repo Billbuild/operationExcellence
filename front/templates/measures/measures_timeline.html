@@ -1,0 +1,265 @@
+{% extends 'base/ancestor_factory_workshop.html' %}
+
+
+<!-- 头文件，主要是 css 文件 -->
+{% block head %}
+<style>
+    .timeline-container {
+        margin-top: 30px;
+        {#overflow-x: auto;#}
+    }
+    .title-line {
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 15px;
+    }
+    .timeline-phase {
+        flex: 1;
+        position: relative;
+        padding: 0 10px;
+    }
+    .phase-title {
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+    .phase-duration {
+        text-align: center;
+        font-size: 12px;
+        margin-bottom: 10px;
+        color: #666;
+    }
+    .timeline-event {
+        position: relative;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    .event-dot {
+        width: 12px;
+        height: 12px;
+        background-color: #333;
+        border-radius: 50%;
+        margin: 0 auto 5px;
+        position: relative;
+        z-index: 1;
+    }
+    .event-name {
+        font-size: 12px;
+        margin-bottom: 3px;
+    }
+    .event-date {
+        font-size: 11px;
+        color: #666;
+    }
+
+</style>
+{% endblock %}
+
+<!-- 标题 -->
+{% block title %}价值流{% endblock %}
+
+{#<!-- 内容的头部标题 -->#}
+{#{% block contentheader %}{% endblock %}#}
+
+<!-- 内容 -->
+{% block content %}
+<!-- 查询 -->
+<section class="mt-5">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <form id="searchForm" method="POST" action="{% url 'measures:timeline' %}">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="woSearch" name="wo_number" placeholder="请输入工单编号：wo + 4位数字，比如 wo1587" pattern="wo\{4}" title="工单编号格式应为wo+4位数字">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">查询</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div id="errorAlert" class="col-6 alert alert-danger mt-3 d-none"></div>
+    </div>
+</section>
+
+<section id="timelineResult" class="container timeline-container d-none">
+    <div class="row justify-content-center title-line">
+        <div class="phase-title">工单编号</div>
+        <div class="phase-duration"><span id="woId"></span></div>
+        <div class="phase-title">单位编号</div>
+        <div class="phase-duration"><span id="organId"></span></div>
+        <div class="phase-title">款式名称</div>
+        <div class="phase-duration"><span id="styleName"></span></div>
+
+    </div>
+    <div class=" row justify-content-center">
+        <!-- 订单管理周期 -->
+        <div class="timeline-phase">
+            <div class="phase-title">订单管理周期</div>
+            <div class="phase-duration"><span id="offerCycle"></span>天</div>
+            <div class="timeline-event">
+                <div class="event-dot"></div>
+                <div class="event-name">订单上线</div>
+                <div class="event-date"><span id="inputOffer"></span></div>
+            </div>
+            <div class="timeline-event">
+                <div class="event-dot"></div>
+                <div class="event-name">订单确认</div>
+                <div class="event-date"><span id="approveOffer"></span></div>
+            </div>
+            <div class="phase-title">订单等待</div>
+            <div class="phase-duration"><span id="offerWaitingDays"></span>天</div>
+        </div>
+        <!-- 采购单管理周期 -->
+        <div class="timeline-phase">
+            <div class="phase-title">采购单管理周期</div>
+            <div class="phase-duration"><span id="poCycle"></span>天</div>
+            <div class="timeline-event">
+                <div class="event-dot"></div>
+                <div class="event-name">采购单上线</div>
+                <div class="event-date"><span id="inputPo"></span></div>
+            </div>
+            <div class="timeline-event">
+                <div class="event-dot"></div>
+                <div class="event-name">供应商确认交期</div>
+                <div class="event-date"><span id="supplierConfirmDelivery"></span></div>
+            </div>
+            <div class="timeline-event">
+                <div class="event-dot"></div>
+                <div class="event-name">内部确认交期</div>
+                <div class="event-date"><span id="internalConfirmDelivery"></span></div>
+            </div>
+            <div class="timeline-event">
+                <div class="event-dot"></div>
+                <div class="event-name">采购单确认</div>
+                <div class="event-date"><span id="approvePo"></span></div>
+            </div>
+        </div>
+        <!-- 供应商交付周期 -->
+        <div class="timeline-phase">
+            <div class="phase-title">采购交付周期</div>
+            <div class="phase-duration"><span id="deliveryCycle"></span>天</div>
+            <div class="timeline-event">
+                <div class="event-dot"></div>
+                <div class="event-name">最后一件物料入库</div>
+                <div class="event-date"><span id="stockInLastBom"></span></div>
+            </div>
+            <div class="phase-title">原材料仓库等待</div>
+            <div class="phase-duration"><span id="materialWaitingDays"></span>天</div>
+        </div>
+        <!-- 生产周期 -->
+        <div class="timeline-phase">
+            <div class="phase-title">车间生产周期</div>
+            <div class="phase-duration"><span id="workshopProductionCycle"></span>天</div>
+            <div class="timeline-event">
+                <div class="event-dot"></div>
+                <div class="event-name">第一件物料领用</div>
+                <div class="event-date"><span id="takeOutFirstBom"></span></div>
+            </div>
+            <div class="timeline-event">
+                <div class="event-dot"></div>
+                <div class="event-name">工单上线</div>
+                <div class="event-date"><span id="productOnline"></span></div>
+            </div>
+            <div class="timeline-event">
+                <div class="event-dot"></div>
+                <div class="event-name">工单下线</div>
+                <div class="event-date"><span id="productOffline"></span></div>
+            </div>
+            <div class="timeline-event">
+                <div class="event-dot"></div>
+                <div class="event-name">成品入库</div>
+                <div class="event-date"><span id="stockInFinished"></span></div>
+            </div>
+            <div class="phase-title">成品仓库等待</div>
+            <div class="phase-duration"><span id="finishedWaitingDays"></span>天</div>
+        </div>
+        <!-- 出货周期 -->
+        <div class="timeline-phase">
+            <div class="phase-title">出货周期</div>
+            <div class="phase-duration"><span id="exitCycle"></span>天</div>
+
+            <div class="timeline-event">
+                <div class="event-dot"></div>
+                <div class="event-name">成品出库</div>
+                <div class="event-date"><span id="takeOutFinished"></span></div>
+            </div>
+
+            <div class="timeline-event">
+                <div class="event-dot"></div>
+                <div class="event-name">成品出厂</div>
+                <div class="event-date"><span id="exitFactoryFinished"></span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+<!-- 右侧侧边栏 控制栏 -->
+{% block control-sidebar %}{% endblock %}
+
+<!-- 文件末尾的 JavaScript 文件-->
+{% block script %}
+<script>
+$(document).ready(function () {
+    $('#searchForm').on('submit', function (e) {
+        e.preventDefault();
+
+        const woId = $('#woSearch').val().trim();
+        const csrfToken = $('[name=csrfmiddlewaretoken]').val()
+
+        $('#errorAlert').addClass('d-none');
+        $('#timelineResult').addClass('d-none');
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: {
+                'wo_id': woId
+                // 'csrfToken': csrfToken
+            },
+            success: function (response) {
+                if (response.error) {
+                    $('#errorAlert').removeClass('d-none').text(response.error);
+                    return;
+                }
+
+                $('#woSearch').val('').blur();
+
+                // $('#styleId').text(response.style_id);
+                $('#woId').text(response.wo_id);
+                $('#organId').text(response.organ_id);
+                $('#styleName').text(response.style_name);
+                $('#offerCycle').text(response.offer_cycle);
+                $('#inputOffer').text(response.input_offer);
+                $('#approveOffer').text(response.approve_offer);
+                $('#offerWaitingDays').text(response.offer_waiting_days);
+                $('#poCycle').text(response.po_cycle);
+                $('#inputPo').text(response.input_po);
+                $('#supplierConfirmDelivery').text(response.supplier_confirm_delivery);
+                $('#internalConfirmDelivery').text(response.internal_confirm_delivery);
+                $('#approvePo').text(response.approve_po);
+                $('#deliveryCycle').text(response.delivery_cycle);
+                $('#stockInLastBom').text(response.stock_in_last_bom);
+                $('#materialWaitingDays').text(response.material_waiting_days);
+                $('#workshopProductionCycle').text(response.workshop_production_cycle);
+                $('#takeOutFirstBom').text(response.take_out_first_bom);
+                $('#productOnline').text(response.product_on_line);
+                $('#productOffline').text(response.product_off_line);
+                $('#stockInFinished').text(response.stock_in_finished);
+                $('#finishedWaitingDays').text(response.finished_waiting_days);
+                $('#exitCycle').text(response.exit_cycle);
+                $('#takeOutFinished').text(response.take_out_finished);
+                $('#exitFactoryFinished').text(response.exit_factory_finished);
+
+                $('#timelineResult').removeClass('d-none');
+            },
+            error: function (xhr) {
+                
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

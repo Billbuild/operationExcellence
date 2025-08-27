@@ -1,0 +1,56 @@
+{
+    "organ_owe": {
+        "01衢州": {
+            "latest_query_date": "2024-01-31",
+            "log_time": "20250312144342"
+        },
+        "02龙游": {
+            "latest_query_date": "2024-01-31",
+            "log_time": "20250312144346"
+        },
+        "03越南": {
+            "latest_query_date": "2024-01-31",
+            "log_time": "20250312144351"
+        },
+        "04孟加拉": {
+            "latest_query_date": "2024-01-31",
+            "log_time": "20250312144356"
+        }
+    },
+    "style_owe": {
+        "01衢州": {
+            "latest_query_date": "2024-01-31",
+            "log_time": "20250312163953"
+        },
+        "02龙游": {
+            "latest_query_date": "2024-01-31",
+            "log_time": "20250312163958"
+        },
+        "03越南": {
+            "latest_query_date": "2024-01-31",
+            "log_time": "20250312164003"
+        },
+        "04孟加拉": {
+            "latest_query_date": "2024-01-31",
+            "log_time": "20250312164008"
+        }
+    },
+    "organ_owe_report": {
+        "01衢州": {
+            "latest_query_date": "2024-01-31",
+            "log_time": "20250313132845"
+        },
+        "02龙游": {
+            "latest_query_date": "2024-01-31",
+            "log_time": "20250313132846"
+        },
+        "03越南": {
+            "latest_query_date": "2024-01-31",
+            "log_time": "20250313132846"
+        },
+        "04孟加拉": {
+            "latest_query_date": "2024-01-31",
+            "log_time": "20250313132846"
+        }
+    }
+}

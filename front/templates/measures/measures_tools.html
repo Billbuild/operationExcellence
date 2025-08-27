@@ -1,0 +1,45 @@
+{% extends 'base/ancestor_factory_workshop.html' %}
+
+
+<!-- 头文件，主要是 css 文件 -->
+{% block head %}{% endblock %}
+
+<!-- 标题 -->
+{% block title %}价值流{% endblock %}
+
+<!-- 内容的头部标题 -->
+{% block contentheader %}{% endblock %}
+
+<!-- 内容 -->
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">工具</h3>
+            <div class="float-right"></div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <button class="btn btn-info" id="copy-eff-report" data-filename="copy-eff-report">复制生产效率报告
+                        </button>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <button class="btn btn-info" id="clear-excel" data-filename="clear-excel">清空缝制工人每日车缝效率
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+<!-- 右侧侧边栏 控制栏 -->
+{% block control-sidebar %}{% endblock %}
+
+<!-- 文件末尾的 JavaScript 文件-->
+{% block script %}
+    <script src="{% static 'js/measures_tools.min.js' %}"></script>
+{% endblock %}

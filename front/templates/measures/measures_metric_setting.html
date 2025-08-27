@@ -1,0 +1,329 @@
+{% extends 'base/ancestor_factory_workshop.html' %}
+
+<!-- 头文件，主要是 css 文件 -->
+{% block head %}{% endblock %}
+
+<!-- 标题 -->
+{% block title %}{% endblock %}
+
+<!-- 内容 -->
+{% block content %}
+
+<!-- 设置 metric -->
+<section id="metricTarget" class="content collapse" style="min-height: auto">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <!-- 卡片容器 -->
+                <div class="card card-primary">
+                    <div class="card-header py-2">
+                        <h3 class="card-title"><small>运营指标设置</small></h3>
+                    </div>
+
+                    <!-- 设置运营单位运营目标的表单 -->
+                    <form id="targetForm" data-factories="{{ factories }}" data-factory-workshops="{{ factory_workshops }}" data-metrics="{{ metrics }}">
+                        <div class="card-body">
+                            <!-- 组织代码 -->
+                            <div class="form-group-sm">
+                                <label for="organIdInput"><small><strong>组织代码</strong></small></label>
+                                <input type="text" class="form-control form-control-sm" id="organIdInput" placeholder="请输入组织代码，例如：f001">
+{#                                <select class="form-control form-control-sm" id="factorySelect">#}
+{#                                    <option value="" selected disabled>请选择工厂</option>#}
+{#                                    {% for factory in factories %}#}
+{#                                        <option value={{ factory }}>{{ factory }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+                            </div>
+
+                            <!-- 运营单位 -->
+                            <div class="form-group-sm">
+                                <label for="organInput"><small><strong>运营单位</strong></small></label>
+                                <input type="text" class="form-control form-control-sm" id="organInput" placeholder="运营单位" disabled>
+{#                                <select class="form-control form-control-sm" id="workshopSelect" disabled>#}
+{#                                    <option value="" selected disabled>请先选择工厂</option>#}
+{#                                </select>#}
+                            </div>
+
+                            <!-- 上级单位 -->
+                            <div class="form-group-sm">
+                                <label for="parentInput"><small><strong>上级单位</strong></small></label>
+                                <input type="text" class="form-control form-control-sm" id="parentInput" placeholder="运营单位的上级单位" disabled>
+                            </div>
+
+                            <!-- 运营指标 -->
+                            <div class="form-group-sm">
+                                <label for="metricSelect"><small><strong>运营指标</strong></small></label>
+                                <select class="form-control form-control-sm" id="metricSelect">
+                                    <option value="" selected disabled>请选择运营指标</option>
+                                    {% for metric_en, metric in metrics_name_en_combine %}
+                                        <option value="{{ metric_en }}">{{ metric }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- 运营目标 -->
+                            <div class="form-group-sm">
+                                <label for="targetInput"><small><strong>运营目标</strong></small></label>
+                                <input type="number" class="form-control form-control-sm" id="targetInput" placeholder="请输入标准" step="any" min="0">
+                            </div>
+                        </div>
+
+                        <!-- 提交按钮 -->
+                        <div class="card-footer py-2">
+                            <div class="row">
+                                <div class="col-3"><button type="reset" class="btn btn-primary btn-sm"><small>重新设置</small></button></div>
+                                <div class="col-3"><button type="submit" class="btn btn-primary btn-sm"><small>提交设置</small></button></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- metrics 清单 -->
+<section class="content bg-light" style="min-height: auto">
+    <div class="container-fluid">
+        <div class="row">
+            <div id="data-container" class="col-md-6 offset-md-3">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-center"><small ><strong>工厂</strong></small></th>
+                            <th class="text-center"><small><strong>车间</strong></small></th>
+                            <th class="text-center"><small><strong>运营指标</strong></small></th>
+                            <th class="text-center"><small><strong>运营目标</strong></small></th>
+                            <th class="text-center">
+                                <button type="button" class="btn btn-outline-primary btn-xs web-fresh"><small>更新</small></button>
+                                <button type="button" class="btn btn-outline-primary btn-xs" data-toggle="collapse" data-target="#metricTarget" aria-expanded="false" aria-controls="metricTarget">
+                                    <small>设置</small>
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in items %}
+                            <tr>
+                                <td class="text-center"><small>{{ data.factory }}</small></td>
+                                <td class="text-center"><small>{{ data.workshop }}</small></td>
+                                <td class="text-center"><small>{{ data.metric }}</small></td>
+                                <td class="text-center"><small>{{ data.target }}</small></td>
+                                <td class="text-center"><button type="button" class="btn btn-outline-danger btn-xs btn-delete"><small>删除</small></button></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-sm justify-content-sm-start">
+                        {% if items.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ items.previous_page_number }}" onclick="loadPage(event, {{ items.previous_page_number }})">
+                                <small>上一页</small>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1"><small>上一页</small></a>
+                        </li>
+                        {% endif %}
+                        {% for number in items.paginator.page_range %}
+                        <li class="page-item {% if items.number == number %}active{% endif %}">
+                            <a class="page-link" href="?page={{ number }}" onclick="loadPage(event, {{ number }})">
+                                <small>{{ number }}</small>
+                            </a>
+                        </li>
+                        {% endfor %}
+                        {% if items.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ items.next_page_number }}" onclick="loadPage(event, {{ items.next_page_number }})">
+                                <small>下一页</small>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">
+                                <small>下一页</small>
+                            </a>
+                        </li>
+                        {% endif %} 
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="position-fixed bottom-0 pt-3" style="z-index: 5; right: 0; bottom: 0">
+    <div id="submitToast" class="toast" role="alert" aria-live="polite" aria-atomic="true" data-delay="2000">
+        <div class="toast-header">
+            <strong class="mr-auto">系统提示</strong>
+            <button type="button" class="ml-2 mb-2 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+        hello world!
+        </div>
+    </div>
+</div>
+<!-- organ_data, organization_config.json的全部数据 -->
+{{ organ_data|json_script:"organ-data" }}
+<!-- factory_workshops 工厂的hierarchy -->
+{{ factory_workshops|json_script:"factory-workshops" }}
+{% endblock %}
+
+<!-- 右侧侧边栏 控制栏 -->
+{% block control-sidebar %}{% endblock %}
+
+<!-- 文件末尾的 JavaScript 文件-->
+{% block script %}
+<script>
+$(document).ready(function() {
+    // metric 设置运营目标
+    const targetForm = $('#targetForm');
+    // metric 设置运营目标 组织代码输入框
+    const organIdInput = $('#organIdInput');
+    // metric 设置 运营指标下拉菜单
+    const metricSelect = $('#metricSelect');
+    // metric 设置 运营目标下拉菜单
+    const targetInput = $('#targetInput');
+    // 运营指标清单 更新按钮
+    const webFresh = $('.web-fresh')
+    // metric 清单
+    const metricTable = $('.table');
+    //  organ_data, organization_config.json的全部数据
+    const hierarchy_dic = JSON.parse(document.getElementById('organ-data').textContent);
+
+    // 显示 toast
+    function showToast(message, type = 'info') {
+        const toast = $('#submitToast');
+        toast.find('.toast-body')
+            .removeClass('text-success text-danger')
+            .addClass(type === 'success' ? 'text-success' : 'text-danger')
+            .text(message);
+
+        const bsToast = new bootstrap.Toast(toast.get(0));
+        bsToast.show();
+    }
+
+    // metric 设置运营目标 组织代码选择后
+    organIdInput.change(function () {
+        const organId = $(this).val();
+
+        const organInput = $('#organInput');
+        const parentInput = $('#parentInput');
+
+        const organName = hierarchy_dic[organId]['name'];
+        const parentName = hierarchy_dic[organId]['parent'];
+        organInput.val(organName);
+        parentInput.val(parentName);
+    });
+
+    metricSelect.change(function () {
+        console.log($(this).val());
+    })
+
+    // metric 设置 表单提交处理
+    targetForm.submit(function(e) {
+        e.preventDefault();
+
+        const organId = organIdInput.val();
+        const metric = metricSelect.val();
+        const target = targetInput.val();
+
+        const postData = {
+            organ_id: organId,
+            metric: metric,
+            target: target
+        }
+
+        let emptyFields = []
+        if (!organId) emptyFields.push('组织代码');
+        if (!metric) emptyFields.push('运营指标');
+        if (!target) emptyFields.push('运营目标');
+
+        if (emptyFields.length > 0) {
+            {#const errorMsg = `${emptyFields.join('、')}${emptyFields.length > 1 ? '均' : ''}未填写`;#}
+            const errorMsg = '您好，您的表单内容填写不完整！'
+            showToast(errorMsg, 'warning');
+            return;
+        }
+
+        $.ajax({
+            url: '/measures/metric_config/',
+            type: 'POST',
+            data: JSON.stringify(postData),
+            success: function (response) {
+                if (response.status === 'success') {
+                    showToast('设置保存成功！', 'success');
+                } else {
+                    showToast('操作失败！', 'danger');
+                }
+            }
+        });
+    });
+
+
+    // metric 设置提交后，更新 metric 清单
+    webFresh.click(function () {
+        setTimeout(() => window.location.reload(), 500);
+    });
+
+    // metric 清单 删除行
+    metricTable.on('click', '.btn-delete', function () {
+        const row = $(this).closest('tr')
+        const factory = row.find('td:first').text();
+        const workshop = row.find('td:nth-child(2)').text();
+        const metric = row.find('td:nth-child(3)').text();
+
+        console.log(factory + ' ' + workshop + ' ' + metric)
+
+        if (confirm(`确定要删除${factory}${workshop}的运营指标${metric}吗？`)) {
+            {#const encodedFactory = encodeURIComponent(factory);#}
+            {#const encodedWorkshop = encodeURIComponent(workshop);#}
+            {#const encodedMetric = encodeURIComponent(metric);#}
+
+            $.ajax({
+                {#url: `/measures/delete_metric/${encodedFactory}/${encodedWorkshop}/${encodedMetric}/`,#}
+                url: `/measures/delete_metric/${factory}/${workshop}/${metric}/`,
+                {#method: 'DELETE',#}
+                method: 'GET',
+                success: function (response) {
+                    row.fadeOut(300, () => {
+                        row.remove();
+                        {#setTimeout(() => window.location.reload(), 500);#}
+                    });
+                    showToast('已经删除成功！', 'success');
+                },
+                error: function(xhr) {
+                    const msg = xhr.status === 404 ? '记录不存在' : '服务器端错误';
+                    showToast(`删除失败：${msg}`, 'danger')
+                }
+
+            });
+        }
+    })
+});
+
+function loadPage(event, page) {
+    event.preventDefault();  // 阻止默认跳转
+    // 通过参数传递 page
+    const url = `?page=${page}`;
+
+    $.ajax({
+        url: url,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"  // 标记为 Ajax 请求
+        },
+        success: function(data) {
+            // 替换表格和分页部分
+            $("#data-container").html(data);
+        },
+        error: function() {
+            alert("加载数据失败，请重试！");
+        }
+    });
+}
+</script>
+{% endblock %}

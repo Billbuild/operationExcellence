@@ -1,0 +1,224 @@
+{% extends 'base/ancestor_factory_workshop.html' %}
+{% load template_filters %}
+
+<!-- 头文件，主要是 css 文件 -->
+{% block head %}
+<style>
+    .workshop-nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+    .workshop-nav ul {
+        display: flex;
+        gap: 15px;
+        padding: 0.5rem;
+        margin: 0;
+        list-style: none;
+    }
+    .workshop-nav a {
+        text-decoration: none;
+        color: #333;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        transition: 0.3s;
+    }
+    .workshop-nav a.active {
+        background: #2196F3;
+        color: white;
+    }
+
+    .workshop-section {
+        {#padding: 100px 20px 40px;#}
+        padding-top: 60px;
+        min-height: 100vh;
+    }
+    .subtitle {
+        color: #6c757d;
+        font-size: 14px;
+    }
+</style>
+{% endblock %}
+
+<!-- 标题 -->
+{% block title %}{% endblock %}
+
+<!-- 内容 -->
+{% block content %}
+<nav class="workshop-nav">
+    <ul>
+        <li><a href="#section-a" class="nav-link active">工厂</a></li>
+        <li><a href="#section-b" class="nav-link">车间</a></li>
+    </ul>
+</nav>
+
+<section id="section-a" class="workshop-section">
+    <div class="text-center pb-1 pt-3 mb-3" style="background-color: white">
+        <p class="subtitle">{{ end_date }}</p>
+        <h4 class="mb-3 text-primary">工厂 OWE 运营情况 </h4>
+        <p class="text-muted">介绍当日MTD YTD 同期 上期的运营情况，以便更全面的比较</p>
+    </div>
+    <div class="row" >
+        <div class="col-md-10 offset-md-1">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th class="text-center"><small><strong>工厂名称</strong></small></th>
+                        <th class="text-center"><small><strong>目标</strong></small></th>
+                        <th class="text-center"><small><strong>实际发生</strong></small></th>
+                        <th class="text-center"><small><strong>MTD</strong></small></th>
+                        <th class="text-center"><small><strong>YTD</strong></small></th>
+                        <th class="text-center"><small><strong>上期</strong></small></th>
+                        <th class="text-center"><small><strong>同期</strong></small></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for factory_data in factory_dataset %}
+                    <tr>
+                        <td class="text-center"><small>{{ factory_data.factory }}</small></td>
+                        <td class="text-center"><small>{{ factory_data.metric_target }}</small></td>
+                        <td class="text-center {{ factory_data.owe_color }}"><small>{{ factory_data.owe }}</small></td>
+                        <td class="text-center {{ factory_data.mtd_owe_color }}"><small>{{ factory_data.mtd_owe }}</small></td>
+                        <td class="text-center {{ factory_data.ytd_owe_color }}"><small>{{ factory_data.ytd_owe }}</small></td>
+                        <td class="text-center {{ factory_data.mom_owe_color }}"><small>{{ factory_data.mom_owe }}</small></td>
+                        <td class="text-center {{ factory_data.yoy_owe_color }}"><small>{{ factory_data.yoy_owe }}</small></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<section id="section-b" class="workshop-section">
+    <div class="text-center pb-1 pt-3 mb-3" style="background-color: white">
+        <p class="subtitle">{{ end_date }}</p>
+        <h4 class="mb-3 text-primary">生产车间 OWE 运营情况</h4>
+        <p class="text-muted">介绍当日MTD YTD 同期 上期的运营情况，以便更全面的比较</p>
+    </div>
+    <div class="row">
+        <div id="data-container" class="col-md-10 offset-md-1">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th class="text-center"><small><strong>工厂名称</strong></small></th>
+                        <th class="text-center"><small><strong>车间名称</strong></small></th>
+                        <th class="text-center"><small><strong>目标</strong></small></th>
+                        <th class="text-center"><small><strong>实际发生</strong></small></th>
+                        <th class="text-center"><small><strong>MTD</strong></small></th>
+                        <th class="text-center"><small><strong>YTD</strong></small></th>
+                        <th class="text-center"><small><strong>上期</strong></small></th>
+                        <th class="text-center"><small><strong>同期</strong></small></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for workshop_data in items %}
+                        <tr>
+                            <td class="text-center"><small>{{ workshop_data.factory }}</small></td>
+                            <td class="text-center"><small>{{ workshop_data.workshop }}</small></td>
+                            <td class="text-center"><small>{{ workshop_data.metric_target }}</small></td>
+                            <td class="text-center {{ workshop_data.owe_color }}"><small>{{ workshop_data.owe }}</small></td>
+                            <td class="text-center {{ workshop_data.mtd_owe_color }}"><small>{{ workshop_data.mtd_owe }}</small></td>
+                            <td class="text-center {{ workshop_data.ytd_owe_color }}"><small>{{ workshop_data.ytd_owe }}</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation">
+                <ul class="pagination pagination-sm justify-content-sm-start">
+                    {% if items.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ items.previous_page_number }}" onclick="loadPage(event, {{ items.previous_page_number }})"><small>上一页</small></a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1"><small>上一页</small></a>
+                        </li>
+                    {% endif %}
+                    {% for num in items.paginator.page_range %}
+                        <li class="page-item {% if items.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}" onclick="loadPage(event, {{ num }})"><small>{{ num }}</small></a>
+                        </li>
+                    {% endfor %}
+                    {% if items.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ items.next_page_number }}" onclick="loadPage(event, {{ items.next_page_number }})"><small>下一页</small></a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1"><small>下一页</small></a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+<!-- 右侧侧边栏 控制栏 -->
+{% block control-sidebar %}{% endblock %}
+
+<!-- 文件末尾的 JavaScript 文件-->
+{% block script %}
+<script>
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+
+        targetSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+
+        document.querySelectorAll('.nav-link').forEach(item => item.classList.remove('active'));
+        this.classList.add('active')
+    });
+});
+
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('.workshop-section');
+    let currentSection = '';
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (window.scrollY >= sectionTop - 100) {
+            currentSection = section.getAttribute('id');
+        }
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${currentSection}`)
+    })
+});
+
+// 加载分页数据
+function loadPage(event, page) {
+    event.preventDefault();  // 阻止默认跳转
+    // 通过参数传递 page
+    const url = `?page=${page}`;
+    console.log('hello world');
+
+    $.ajax({
+        url: url,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"  // 标记为 Ajax 请求
+        },
+        success: function(data) {
+            // 替换表格和分页部分
+            $("#data-container").html(data);
+        },
+        error: function() {
+            alert("加载数据失败，请重试！");
+        }
+    });
+}
+</script>
+
+{% endblock %}

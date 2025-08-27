@@ -1,0 +1,131 @@
+{
+    "organs": {
+        "category": "middle",
+        "csv": "",
+        "subject": "单位清单",
+        "en_fields": ["organ_id","sequence1","sequence2","sequence3","sequence4","sequence5"],
+        "cn_fields": ["单位编码", "序列一", "序列二","序列三","序列四","序列五"],
+        "normal_fields": ["organ_id","sequence1","sequence2","sequence3","sequence4","sequence5"],
+        "primary_key": "organ_id",
+        "foreign_key": [""],
+        "unique_columns": ["organ_id"]
+    },
+    "employees": {
+        "category": "middle",
+        "csv": "",
+        "subject": "款式清单",
+        "en_fields": ["employee_id","factory","workshop","line","position","gender","age","education","in_factory_date","identity_no"],
+        "cn_fields": ["工号","工厂","车间","小组","岗位","性别","年龄","学历","入厂日期","身份证号"],
+        "normal_fields": ["employee_id","name","organ_id","position"],
+        "primary_key": "employee_id",
+        "foreign_key": ["organ_id"]
+    },
+    "output": {
+        "category": "conformity",
+        "csv": "",
+        "subject": "报工明细",
+        "en_fields": ["date","factory","workshop","line","employee_id","name","position","job","style_id","step_id","sam","step_description","step_level","volumes","volume_discount_rate","volume_discount","piece_rate","subsidy_factor","special_subsidy","piece_wage","subsidy_wage","special_wage","total_piece_wage","total_points"],
+        "cn_fields": ["日期","工厂","车间","小组","工号","姓名","工种","职务","款式编号","工票号","时间(分)","工序描述","工序等级","产量","产量折扣率","折扣产量","单价","补贴系数","特殊补贴","计件工资","补贴工资","特殊工资","计件总工资","总工分"],
+        "normal_fields": ["factory","workshop","line","date","employee_id","name","style_id","step_id","sam","volumes"],
+        "primary_key": "",
+        "foreign_key": [""],
+        "unique_columns": ["date","employee_id","step_no"],
+        "on_key": {
+            "01衢州": "name",
+            "02龙游": "name",
+            "03越南": "employee_id",
+            "04孟加拉": "employee_id"
+        }
+    },
+    "attendance": {
+        "category": "conformity",
+        "csv": "",
+        "subject": "考勤明细",
+        "en_fields": ["factory","name","attendance_group","department","employee_id","position","date","working_hours"],
+        "cn_fields": ["工厂","姓名","考勤组","部门","工号","职位","日期","工作时长"],
+        "normal_fields": ["factory","employee_id","name","date","working_hours"],
+        "primary_key": "",
+        "foreign_key": [""],
+        "unique_columns": [""]
+    },
+    "organ_owe": {
+        "category": "Analysis",
+        "csv": "",
+        "subject": "",
+        "en_fields": ["date","factory","workshop","line","employee_id","sah","working_hours","eff"],
+        "cn_fields": ["日期","工厂","车间","小组","工号","SAH","工作时长","直接效率"],
+        "normal_fields": ["date","factory","workshop","line","employee_id","sah","working_hours","eff"],
+        "primary_key": "",
+        "foreign_key": [""],
+        "unique_columns": [""]
+    },
+    "style_owe": {
+        "category": "Analysis",
+        "csv": "",
+        "subject": "",
+        "en_fields": ["date","factory","workshop","line","employee_id","style_id","style_sah","working_hours","style_working_hours","eff"],
+        "cn_fields": ["日期","工厂","车间","小组","工号","款式编号","款式SAH","工作时长","款式工作时长","款式直接效率"],
+        "normal_fields": ["date","factory","workshop","line","employee_id","style_id","style_sah","working_hours","style_working_hours","style_eff"],
+        "primary_key": "",
+        "foreign_key": [""],
+        "unique_columns": [""]
+    },
+    "organ_owe_report": {
+        "category": "Report",
+        "csv": "",
+        "subject": "",
+        "en_fields": ["date","factory","workshop","line","sah","working_hours","eff"],
+        "cn_fields": ["日期","工厂","车间","小组","SAH","工作时长","eff"],
+        "normal_fields": ["date","factory","workshop","line","sah","working_hours","eff"],
+        "primary_key": "",
+        "foreign_key": [""],
+        "unique_columns": [""]
+    },
+    "organ_sam_cost-report": {
+        "category": "report",
+        "csv": "",
+        "subject": "",
+        "en_fields": ["date", "factory", "workshop", "cost","sams", "sam_cost", "working_minutes", "owe", "per_minute_cost"],
+        "cn_fields": ["日期", "工厂", "车间", "成本","SAMs", "工时分钟成本", "工作时长", "OWE", "时长分钟成本"],
+        "primary_key": "",
+        "foreign_key": [""],
+        "unique_columns": [""]
+    },
+    "organ_rft_report": {
+        "category": "report",
+        "csv": "",
+        "subject": "",
+        "en_fields": ["date", "factory", "workshop", "output_volume","defects", "rft"],
+        "cn_fields": ["日期", "工厂", "车间", "产量","疵品", "一次合格率"],
+        "primary_key": "",
+        "foreign_key": [""],
+        "unique_columns": [""]
+    },
+    "organ_attendance_report": {
+        "category": "report",
+        "csv": "",
+        "subject": "",
+        "en_fields": ["date", "factory", "workshop", "employees", "operators", "trimmers", "material_handlers", "qcs", "attendances", "operator_attendances", "trimmer_attendances", "material_handler_attendances", "qc_attendances"],
+        "cn_fields": ["日期", "工厂", "车间", "员工人数", "操作工人数", "辅工人数", "物料员人数", "QC人数", "出勤人数", "操作工出勤人数", "辅工出勤人数", "物料员出勤人数", "QC出勤人数"],
+        "primary_key": [""],
+        "unique_columns": [""]
+    },
+    "organ_machine_report": {
+        "category": "report",
+        "csv": "",
+        "subject": "",
+        "en_fields": ["date", "factory", "workshop", "machine_name", "machine_code", "running_time", "adjustment", "repairing", "waiting", "breakdown", "changeover"],
+        "cn_fields": ["日期", "工厂", "车间", "设备名称", "设备编码", "运行时间", "调试时间", "维修时间", "停机时间", "宕机时间", "转款时间"],
+        "primary_key": [""],
+        "unique-columns": [""]
+    },
+    "organ_style_report": {
+        "category": "report",
+        "csv": "",
+        "subject": "",
+        "en_fields": ["date", "factory", "workshop", "style_name", "style_code", "planning", "achieved", "defects", "defect_a", "defect_b", "defect_c"],
+        "cn_fields": ["日期", "工厂", "车间", "款式名称", "款式编码", "计划产量", "实际产量", "疵品数量", "疵品a数量", "疵品b数量", "疵品c数量"],
+        "primary_key": [""],
+        "unique_columns": [""]
+    }
+}

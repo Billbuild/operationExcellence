@@ -1,0 +1,224 @@
+{
+    "c001": {
+        "id": "c001",
+        "name": "天天向上",
+        "type": "company",
+        "parent": null
+    },
+    "f001": {
+        "id": "f001",
+        "name": "杭州工厂",
+        "type": "factory",
+        "parent": "c001"
+    },
+    "f002": {
+        "id": "f002",
+        "name": "苏州工厂",
+        "type": "factory",
+        "parent": "c001"
+    },
+    "f003": {
+        "id": "f003",
+        "name": "宁波工厂",
+        "type": "factory",
+        "parent": "c001"
+    },
+    "f004": {
+        "id": "f004",
+        "name": "南京工厂",
+        "type": "factory",
+        "parent": "c001"
+    },
+    "w001": {
+        "id": "w001",
+        "name": "车间A",
+        "type": "workshop",
+        "parent": "f001"
+    },
+    "w002": {
+        "id": "w002",
+        "name": "车间B",
+        "type": "workshop",
+        "parent": "f001"
+    },
+    "w003": {
+        "id": "w003",
+        "name": "车间C",
+        "type": "workshop",
+        "parent": "f001"
+    },
+    "w004": {
+        "id": "w004",
+        "name": "车间D",
+        "type": "workshop",
+        "parent": "f001"
+    },
+    "w005": {
+        "id": "w005",
+        "name": "车间E",
+        "type": "workshop",
+        "parent": "f001"
+    },
+    "w006": {
+        "id": "w006",
+        "name": "车间F",
+        "type": "workshop",
+        "parent": "f001"
+    },
+    "w007": {
+        "id": "w007",
+        "name": "车间G",
+        "type": "workshop",
+        "parent": "f001"
+    },
+    "w008": {
+        "id": "w008",
+        "name": "车间H",
+        "type": "workshop",
+        "parent": "f001"
+    },
+    "w009": {
+        "id": "w009",
+        "name": "车间A",
+        "type": "workshop",
+        "parent": "f002"
+    },
+    "w010": {
+        "id": "w010",
+        "name": "车间B",
+        "type": "workshop",
+        "parent": "f002"
+    },
+    "w011": {
+        "id": "w011",
+        "name": "车间C",
+        "type": "workshop",
+        "parent": "f002"
+    },
+    "w012": {
+        "id": "w012",
+        "name": "车间D",
+        "type": "workshop",
+        "parent": "f002"
+    },
+    "w013": {
+        "id": "w013",
+        "name": "车间E",
+        "type": "workshop",
+        "parent": "f002"
+    },
+    "w014": {
+        "id": "w014",
+        "name": "车间F",
+        "type": "workshop",
+        "parent": "f002"
+    },
+    "w015": {
+        "id": "w015",
+        "name": "车间G",
+        "type": "workshop",
+        "parent": "f002"
+    },
+    "w016": {
+        "id": "w016",
+        "name": "车间H",
+        "type": "workshop",
+        "parent": "f002"
+    },
+    "w017": {
+        "id": "w017",
+        "name": "车间A",
+        "type": "workshop",
+        "parent": "f003"
+    },
+    "w018": {
+        "id": "w018",
+        "name": "车间B",
+        "type": "workshop",
+        "parent": "f003"
+    },
+    "w019": {
+        "id": "w019",
+        "name": "车间C",
+        "type": "workshop",
+        "parent": "f003"
+    },
+    "w020": {
+        "id": "w020",
+        "name": "车间D",
+        "type": "workshop",
+        "parent": "f003"
+    },
+    "w021": {
+        "id": "w021",
+        "name": "车间E",
+        "type": "workshop",
+        "parent": "f003"
+    },
+    "w022": {
+        "id": "w022",
+        "name": "车间F",
+        "type": "workshop",
+        "parent": "f003"
+    },
+    "w023": {
+        "id": "w023",
+        "name": "车间G",
+        "type": "workshop",
+        "parent": "f003"
+    },
+    "w024": {
+        "id": "w024",
+        "name": "车间H",
+        "type": "workshop",
+        "parent": "f003"
+    },
+    "w025": {
+        "id": "w025",
+        "name": "车间A",
+        "type": "workshop",
+        "parent": "f004"
+    },
+    "w026": {
+        "id": "w026",
+        "name": "车间B",
+        "type": "workshop",
+        "parent": "f004"
+    },
+    "w027": {
+        "id": "w027",
+        "name": "车间C",
+        "type": "workshop",
+        "parent": "f004"
+    },
+    "w028": {
+        "id": "w028",
+        "name": "车间D",
+        "type": "workshop",
+        "parent": "f004"
+    },
+    "w029": {
+        "id": "w029",
+        "name": "车间E",
+        "type": "workshop",
+        "parent": "f004"
+    },
+    "w030": {
+        "id": "w030",
+        "name": "车间F",
+        "type": "workshop",
+        "parent": "f004"
+    },
+    "w031": {
+        "id": "w031",
+        "name": "车间G",
+        "type": "workshop",
+        "parent": "f004"
+    },
+    "w032": {
+        "id": "w032",
+        "name": "车间H",
+        "type": "workshop",
+        "parent": "f004"
+    }
+}

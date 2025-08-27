@@ -1,0 +1,53 @@
+{% load template_filters %}
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th class="text-center"><small><strong>工厂名称</strong></small></th>
+            <th class="text-center"><small><strong>车间名称</strong></small></th>
+            <th class="text-center"><small><strong>目标</strong></small></th>
+            <th class="text-center"><small><strong>实际发生</strong></small></th>
+            <th class="text-center"><small><strong>MTD</strong></small></th>
+            <th class="text-center"><small><strong>YTD</strong></small></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in items %}
+            <tr>
+                <td class="text-center"><small>{{ row.factory }}</small></td>
+                <td class="text-center"><small>{{ row.workshop }}</small></td>
+                <td class="text-center"><small>{{ row.target }}</small></td>
+                <td class="text-center {{ row.color }} "><small>{{ row.eff }}</small></td>
+                <td class="text-center {{ row.color }} "><small>{{ row.mtd | decimal:2 }}</small></td>
+                <td class="text-center {{ row.color }} "><small>{{ row.ytd | decimal:2}}</small></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<nav aria-label="Page navigation">
+    <ul class="pagination pagination-sm justify-content-sm-start">
+        {% if items.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ items.previous_page_number }}" onclick="loadPage(event, {{ items.previous_page_number }})"><small>上一页</small></a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1"><small>上一页</small></a>
+            </li>
+        {% endif %}
+        {% for num in items.paginator.page_range %}
+            <li class="page-item {% if items.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}" onclick="loadPage(event, {{ num }})"><small>{{ num }}</small></a>
+            </li>
+        {% endfor %}
+        {% if items.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ items.next_page_number }}" onclick="loadPage(event, {{ items.next_page_number }})"><small>下一页</small></a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1"><small>下一页</small></a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>

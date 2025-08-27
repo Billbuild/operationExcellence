@@ -1,0 +1,285 @@
+{% extends 'base/ancestor_factory_workshop.html' %}
+
+<!-- 头文件，主要是 css 文件 -->
+{% block head %}
+<style>
+.search-container {
+    min-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.search-btn {
+    background-color: #1E9FFF; /* Laydate蓝色 */
+    color: white;
+    border: none;
+}
+.search-btn:hover {
+    background-color: #1AA094;
+}
+.data-header {
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 10px;
+    margin-bottom: 20px
+}
+.phase-title {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+.phase-duration {
+    text-align: center;
+    font-size: 12px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    color: #666;
+}
+.title-line {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+.legend-item {
+    {#display: inline-block;#}
+    margin-right: 15px;
+}
+.legend-color {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+    border-radius: 2px;
+}
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.data-table th, .data-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+.data-table th {
+    font-weight: 500;
+    color: #495057;
+}
+</style>
+{% endblock %}
+
+<!-- 标题 -->
+{% block title %}{% endblock %}
+
+<!-- 内容 -->
+{% block content %}
+<section class="mt-5">
+    <div class="row justify-content-center">
+        <div class="col-9">
+            <form id="searchForm" class="row" method="POST" action="{% url 'measures:customer_line' %}" >
+                <div class="col-md-5 input-group">
+                    <span class="input-group-text">客户编号</span>
+                    <input type="text" class="form-control" id="customerIdInput" name="customer_id" placeholder="请输入客户编号：cus+3位数字" title="客户编号格式应为cus位数字" autocomplete="off" required>
+                </div>
+                <div class="col-md-5 input-group">
+                    <span class="input-group-text">日期范围</span>
+                    <input type="text" class="form-control" id="dateRangeInput" name="date_range" placeholder="请选择起始日期-结束日期" title="起始日期和结束日期" autocomplete="off" required>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn search-btn w-50">
+                        <i class="bi bi-search"></i> 查询
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div id="errorAlert" class="col-6 alert alert-danger mt-3 d-none"></div>
+    </div>
+</section>
+<section id="customerResult" class="container mt-5 d-none">
+    <div class="row justify-content-center title-line">
+        <div class="phase-title">客户编码</div>
+        <div class="phase-duration"><span id="customerId"></span></div>
+        <div class="phase-title">起始日期</div>
+        <div class="phase-duration"><span id="startDate"></span></div>
+        <div class="phase-title">截止日期</div>
+        <div class="phase-duration"><span id="endDate"></span></div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div>
+                <div class="phase-title text-center"><span>SAH产能占比</span></div>
+                <div id="capacityChart" style="height: 170px"></div>
+                <div class="row justify-content-center mt-3">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #36a2eb"></span>
+                        <span id="customerIdLegend"></span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: #FF9F40;"></span>
+                        <span>全部</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>运营指标</th>
+                        <th>当期完成</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>OWE</td>
+                        <td id="oweValue"></td>
+                    </tr>
+                    <tr>
+                        <td>LeadTime</td>
+                        <td id="leadTimeValue"></td>
+                    </tr>
+                    <tr>
+                        <td>RFT</td>
+                        <td id="rftValue"></td>
+                    </tr>
+                    <tr>
+                        <td>Final Rework</td>
+                        <td id="finalReworkValue"></td>
+                    </tr>
+                    <tr>
+                        <td>HOT</td>
+                        <td id="hotValue"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+<!-- 右侧侧边栏 控制栏 -->
+{% block control-sidebar %}{% endblock %}
+
+<!-- 文件末尾的 JavaScript 文件-->
+{% block script %}
+<script src="{% static 'adminlte/plugins/laydate-master/laydate-master/dist/laydate.js' %}"></script>
+{#<script src="{% static 'adminlte/plugins/echarts/dist/echarts.min.js' %}"></script>#}
+<script>
+$(document).ready(function () {
+
+    laydate.render({
+        elem: '#dateRangeInput',
+        range: true,
+        theme: '#1E9FFF', // 蓝色主题
+        format: 'yyyy-MM-dd',
+        trigger: 'click'
+    });
+
+    $('#searchForm').on('submit', function (e) {
+        e.preventDefault();
+
+        const customerId = $('#customerIdInput').val().trim();
+        const dateRange = $('#dateRangeInput').val().trim();
+
+        $('#errorAlert').addClass('d-none');
+        $('#customerResult').addClass('d-none');
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: {
+                'customer_id': customerId,
+                'date_range': dateRange
+            },
+            success: function (response) {
+                if (response.error) {
+                    $('#errorAlert').removeClass('d-none').text(response.error);
+                    return;
+                }
+
+                $('#customerIdInput').val('').blur();
+                $('#dateRangeInput').val('').blur();
+
+                $('#customerId').text(response.customer_id);
+                $('#customerIdLegend').text(response.customer_id);
+                $('#startDate').text(response.start_date);
+                $('#endDate').text(response.end_date)
+                $('#oweValue').text(response.owe);
+                $('#leadTimeValue').text(response.lead_time);
+                $('#rftValue').text(response.rft)
+                $('#finalReworkValue').text(response.final_rework)
+                $('#hotValue').text(response.hot)
+
+                $('#customerResult').removeClass('d-none');
+
+                const customer_proportion = response.customer_proportion
+                const other_proportion = response.other_proportion
+
+                const myChart = initPieChart(customer_proportion, other_proportion);
+
+                window.addEventListener('resize', () => {
+                    myChart.resize();
+                });
+
+            },
+
+        });
+    });
+
+});
+
+function initPieChart (customer_proportion, other_proportion) {
+    let chartDom = document.getElementById('capacityChart');
+    let myChart = echarts.init(chartDom);
+
+    let option = {
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c}% ({d}%)'
+        },
+        series: [{
+            name: 'SAH产能占比',
+            type: 'pie',
+            radius: ['50%', '70%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+            },
+            label: {
+                show: false,
+                position: 'center'
+            },
+            emphasis: {
+                label: {
+                    show: true,
+                    fontSize: '18',
+                    fontWeight: 'bold'
+                }
+            },
+            labelLine: {
+                show: false
+            },
+            data: [
+                {value: customer_proportion, name: 'cus001', itemStyle: {color: '#36a2eb'}},
+                {value: other_proportion, name: '全部', itemStyle: {color: '#ff9f40'}}
+            ]
+        }]
+    };
+
+    myChart.setOption(option);
+
+    return myChart
+}
+
+
+// 响应式调整
+window.addEventListener('resize', () => {
+    myChart.resize();
+});
+
+</script>
+{% endblock %}

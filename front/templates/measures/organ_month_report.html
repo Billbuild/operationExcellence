@@ -1,0 +1,1056 @@
+{% extends 'base/ancestor_factory_workshop.html' %}
+{% load template_filters %}
+
+<!-- 头文件，主要是 css 文件 -->
+{% block head %}
+<style>
+{# 导航 #}
+.workshop-nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+.workshop-nav ul {
+    display: flex;
+    gap: 15px;
+    padding: 0.5rem;
+    margin: 0;
+    list-style: none;
+}
+.workshop-nav a {
+    text-decoration: none;
+    color: #333;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+.workshop-nav a.active {
+    background: #2196F3;
+    color: white;
+}
+{# 导航 #}
+
+.workshop-section {
+    {#padding: 100px 20px 40px;#}
+    padding-top: 60px;
+    min-height: 100vh;
+}
+
+{# 达成率 #}
+.achieved-metric-header {
+    background-color: white;
+}
+.slogan {
+    color: #6c757d;
+    font-size: 14px;
+}
+#achieved-target-owe {
+    {#background-image: url("{% static 'images/texture-5.jpg' %}");#}
+}
+#achieved-target-samcost {
+    background-image: url("{% static 'images/texture-6.jpg' %}");
+}
+#achieved-target-wip {
+    background-image: url("{% static 'images/texture-4.png' %}");
+}
+#achieved-target-leadtime {
+    background-image: url("{% static 'images/texture-7.jpg' %}");
+}
+#achieved-target-bts {
+    background-image: url("{% static 'images/texture-9.jpg' %}");
+}
+#achieved-target-hot {
+    background-image: url("{% static 'images/texture-8.jpg' %}");
+}
+#achieved-target-rft {
+    background-image: url("{% static 'images/texture-11.jpg' %}");
+}
+#achieved-target-finalreject {
+    background-image: url("{% static 'images/texture-10.jpg' %}");
+}
+.achieved-metric-container {
+    border-bottom: 2px solid #e2e6ea;
+
+    border-radius: 10px;
+    overflow: hidden;
+}
+.gauge-top {
+    border-bottom: 2px solid #e2e6ea;
+}
+.gauge-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-align: center;
+}
+.achieved-metric-container:nth-child(odd) {
+    border-right: 2px solid #e2e6ea;
+}
+.achieved-metric-container:hover {
+    background-color: white;
+}
+{# 右侧背景图片 #}
+.achieved-target-background {
+    background-size: cover;
+    background-position: center;
+    height: 220px;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 2px 2px 10px rgb(0, 0, 0, 0.5);
+}
+{#右侧背景图片上方的title 例如OWE#}
+.achieved-metric-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    letter-spacing: 5px;
+    font-family: 'Arial Black', sans-serif;
+}
+{# 左侧 metric 的数据，例如目标值 完成值 达成率#}
+.achieved-metric-data {
+    {#background-color: white;#}
+    padding-left: 25px;
+}
+.metric-card {
+    margin-bottom: 25px;
+}
+.metric-name {
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+.metric-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #212529;
+}
+.achievement-medium {
+    color: #fd7e14;
+}
+.achievement-high {
+    color: #198754;
+}
+{# 达成率 #}
+
+{# OWE #}
+.achieved-chart-container {
+    height: 300px;
+    border-bottom: 2px solid #e2e6ea;
+}
+.achieved-chart-container:nth-child(odd) {
+    border-right: 2px solid #e2e6ea;
+}
+.achieved-chart-container:hover {
+    background-color: white;
+}
+{# OWE #}
+
+</style>
+{% endblock %}
+
+<!-- 标题 -->
+{% block title %}{% endblock %}
+
+<!-- 内容 -->
+{% block content %}
+<nav class="workshop-nav">
+    <ul>
+        <li class="nav-item">
+            <a href="#section-achieved" class="nav-link active">
+                达成率
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#section-owe" class="nav-link">
+                OWE
+            </a>
+        </li>
+{#        <li class="nav-item">#}
+{#            <a href="#section-sam-cost" class="nav-link">#}
+{#                SAM Cost#}
+{#            </a>#}
+{#        </li>#}
+{#        <li class="nav-item">#}
+{#            <a href="#section-wip" class="nav-link">#}
+{#                WIP#}
+{#            </a>#}
+{#        </li>#}
+{#        <li class="nav-item">#}
+{#            <a href="#section-lead-time" class="nav-link">#}
+{#                Lead Time#}
+{#            </a>#}
+{#        </li>#}
+        <li class="nav-item">
+            <a href="#section-bts" class="nav-link">
+                BTS
+            </a>
+        </li>
+{#        <li class="nav-item">#}
+{#            <a href="#section-hot" class="nav-link">#}
+{#                HOT#}
+{#            </a>#}
+{#        </li>#}
+        <li class="nav-item">
+            <a href="#section-rft" class="nav-link">
+                RFT
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#section-final-rework" class="nav-link">
+                Final Rework
+            </a>
+        </li>
+    </ul>
+</nav>
+<section id="section-achieved" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">{{ year }}年{{ month }}月 {{ factory_name }}</p>
+        <h3 class="mb-3 text-primary">运营指标达成率</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <div class="col-md-6 pt-3 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="gauge-top pb-1">
+                        <p>
+                            <span class="gauge-title">OWE </span><br>
+                            <span class="text-muted">目标&nbsp;</span><span class="text-muted">{{ metric_data.owe.metric_target|percentage:2 }}</span>&nbsp;
+                            <span class="text-muted">YTD&nbsp;</span><span style="color: {{ metric_data.owe.avg_ytd_metric_color }}">{{ metric_data.owe.avg_ytd_metric_value|percentage:2 }}</span>
+                        </p>
+                    </div>
+                    <div id="owe-gauge" style="height: 200px" class="pt-3 pl-3 text-center"></div>
+                </div>
+                <div class="col-md-6 pt-3 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="gauge-top pb-1">
+                        <p>
+                            <span class="gauge-title">Sam Cost </span><br>
+                            <span class="text-muted">目标&nbsp;</span><span class="text-muted">{{ metric_data.sam_cost.metric_target|decimal:2 }}</span>&nbsp;
+                            <span class="text-muted">YTD&nbsp;</span><span style="color: {{ metric_data.sam_cost.avg_ytd_metric_color }}">{{ metric_data.sam_cost.avg_ytd_metric_value|decimal:2 }}{{ metric_data.sam_cost.metric_unit }}</span>
+                        </p>
+                    </div>
+                    <div id="sam-cost-gauge" style="height: 200px" class="pt-3 pl-3 text-center"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 pt-3 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="gauge-top pb-1">
+                        <p>
+                            <span class="gauge-title">WIP </span><br>
+                            <span class="text-muted">目标&nbsp;</span><span class="text-muted">{{ metric_data.wip.metric_target|decimal:2 }}</span>&nbsp;
+                            <span class="text-muted">YTD&nbsp;</span><span style="color: {{ metric_data.wip.avg_ytd_metric_color }}">{{ metric_data.wip.avg_ytd_metric_value|decimal:2 }}{{ metric_data.wip.metric_unit }}</span>
+                        </p>
+                    </div>
+                    <div id="wip-gauge" style="height: 200px" class="pt-3 pl-3 text-center"></div>
+                </div>
+                <div class="col-md-6 pt-3 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="gauge-top pb-1">
+                        <p>
+                            <span class="gauge-title">Lead Time </span><br>
+                            <span class="text-muted">目标&nbsp;</span><span class="text-muted">{{ metric_data.lead_time.metric_target|decimal:2 }}</span>&nbsp;
+                            <span class="text-muted">YTD&nbsp;</span><span style="color: {{ metric_data.lead_time.avg_ytd_metric_color }}">{{ metric_data.lead_time.avg_ytd_metric_value|decimal:2 }}{{ metric_data.lead_time.metric_unit }}</span>
+                        </p>
+                    </div>
+                    <div id="lead-time-gauge" style="height: 200px" class="pt-3 pl-3 text-center"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 pt-3 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="gauge-top pb-1">
+                        <p>
+                            <span class="gauge-title">BTS </span><br>
+                            <span class="text-muted">目标&nbsp;</span><span class="text-muted">{{ metric_data.bts.metric_target|percentage:2 }}</span>&nbsp;
+                            <span class="text-muted">YTD&nbsp;</span><span style="color: {{ metric_data.bts.avg_ytd_metric_color }}">{{ metric_data.bts.avg_ytd_metric_value|percentage:2 }}</span>
+                        </p>
+                    </div>
+                    <div id="bts-gauge" style="height: 200px" class="pt-3 pl-3 text-center"></div>
+                </div>
+                <div class="col-md-6 pt-3 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="gauge-top pb-1">
+                        <p>
+                            <span class="gauge-title">HOT </span><br>
+                            <span class="text-muted">目标&nbsp;</span><span class="text-muted">{{ metric_data.hot.metric_target|percentage:2 }}</span>&nbsp;
+                            <span class="text-muted">YTD&nbsp;</span><span style="color: {{ metric_data.hot.avg_ytd_metric_color }}">{{ metric_data.hot.avg_ytd_metric_value|percentage:2 }}</span>
+                        </p>
+                    </div>
+                    <div id="hot-gauge" style="height: 200px" class="pt-3 pl-3 text-center"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 pt-3 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="gauge-top pb-1">
+                        <p>
+                            <span class="gauge-title">RFT </span><br>
+                            <span class="text-muted">目标&nbsp;</span><span class="text-muted">{{ metric_data.rft.metric_target|percentage:2 }}</span>&nbsp;
+                            <span class="text-muted">YTD&nbsp;</span><span style="color: {{ metric_data.rft.avg_ytd_metric_color }}">{{ metric_data.rft.avg_ytd_metric_value|percentage:2 }}</span>
+                        </p>
+                    </div>
+                    <div id="rft-gauge" style="height: 200px" class="pt-3 pl-3 text-center"></div>
+                </div>
+                <div class="col-md-6 pt-3 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="gauge-top pb-1">
+                        <p>
+                            <span class="gauge-title">Final Rework </span><br>
+                            <span class="text-muted">目标&nbsp;</span><span class="text-muted">{{ metric_data.final_rework.metric_target|percentage:2 }}</span>&nbsp;
+                            <span class="text-muted">YTD&nbsp;</span><span style="color: {{ metric_data.final_rework.avg_ytd_metric_color }}">{{ metric_data.final_rework.avg_ytd_metric_value|percentage:2 }}</span>
+                        </p>
+                    </div>
+                    <div id="final-rework-gauge" style="height: 200px" class="pt-3 pl-3 text-center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-owe" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">{{ year }}年{{ month }}月 {{ factory_name }}</p>
+        <h3 class="mb-3 text-info">{{ metric_en_list.0 }} 运营分析</h3>
+        <p class="text-muted">有效时间利用率 速率 直接比 合格率是 OWE 的重要组成因素</p>
+    </div>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <div id="owe-bar" class="col-md-6 achieved-chart-container"></div>
+                <div id="owe-line" class="col-md-6 achieved-chart-container"></div>
+            </div>
+            <div class="mt-4">
+                <h5 class="mb-4 text-info">概述</h5>
+                <p>B车间 C车间 常山 姜家山 OWE的完成值低于目标，其中常山的OWE完成值最低，为68%</p>
+                <p>本月工作日31天，未完成目标的工作日为 14天，其中 3/17 日OWE仅为 61%</p>
+                <h5 class="mb-4 text-info">环境 - 常山</h5>
+                <p>常山本月完成12款，其中新款8个，返单4款，款式数量和上期持平，但新增款式较上期增加4款，新款转款时间平均为12个小时，旧款转款平均时间为4小时，新款转款时间增加32小时</p>
+                <h5 class="mb-4 text-info">人员 - 常山</h5>
+                <p>常山本月员工出勤率 96%，处于合理范围</p>
+                <h5 class="mb-4 text-info">设备 - 常山</h5>
+                <p>关键设备设备故障 维修时长合计15个小时，处于合理范围</p>
+                <h5 class="mb-4 text-info">物料 - 常山</h5>
+                <p>重要款式001物料出现配送问题，导致等待物料，产线停滞2小时</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-sam-cost" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-info">{{ metric_en_list.1 }} 运营分析</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <div id="sam-cost-bar" class="col-md-6 achieved-chart-container"></div>
+                <div id="sam-cost-line" class="col-md-6 achieved-chart-container"></div>
+            </div>
+            <div class="mt-4">
+                <h5 class="mb-4 text-info">概述</h5>
+                <p>B车间 C车间 常山 姜家山 OWE的完成值低于目标，其中常山的OWE完成值最低，为68%</p>
+                <p>本月工作日31天，未完成目标的工作日为 14天，其中 3/17 日OWE仅为 61%</p>
+                <h5 class="mb-4 text-info">环境 - 常山</h5>
+                <p>常山本月完成12款，其中新款8个，返单4款，款式数量和上期持平，但新增款式较上期增加4款，新款转款时间平均为12个小时，旧款转款平均时间为4小时，新款转款时间增加32小时</p>
+                <h5 class="mb-4 text-info">人员 - 常山</h5>
+                <p>常山本月员工出勤率 96%，处于合理范围</p>
+                <h5 class="mb-4 text-info">设备 - 常山</h5>
+                <p>关键设备设备故障 维修时长合计15个小时，处于合理范围</p>
+                <h5 class="mb-4 text-info">物料 - 常山</h5>
+                <p>重要款式001物料出现配送问题，导致等待物料，产线停滞2小时</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-wip" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-info">{{ metric_en_list.2 }} 运营分析</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <div id="wip-bar" class="col-md-6 achieved-chart-container"></div>
+                <div id="wip-line" class="col-md-6 achieved-chart-container"></div>
+            </div>
+            <div class="mt-4">
+                <h5 class="mb-4 text-info">概述</h5>
+                <p>B车间 C车间 常山 姜家山 OWE的完成值低于目标，其中常山的OWE完成值最低，为68%</p>
+                <p>本月工作日31天，未完成目标的工作日为 14天，其中 3/17 日OWE仅为 61%</p>
+                <h5 class="mb-4 text-info">环境 - 常山</h5>
+                <p>常山本月完成12款，其中新款8个，返单4款，款式数量和上期持平，但新增款式较上期增加4款，新款转款时间平均为12个小时，旧款转款平均时间为4小时，新款转款时间增加32小时</p>
+                <h5 class="mb-4 text-info">人员 - 常山</h5>
+                <p>常山本月员工出勤率 96%，处于合理范围</p>
+                <h5 class="mb-4 text-info">设备 - 常山</h5>
+                <p>关键设备设备故障 维修时长合计15个小时，处于合理范围</p>
+                <h5 class="mb-4 text-info">物料 - 常山</h5>
+                <p>重要款式001物料出现配送问题，导致等待物料，产线停滞2小时</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-lead-time" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-info">{{ metric_en_list.3 }} 运营分析</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <div id="lead-time-bar" class="col-md-6 achieved-chart-container"></div>
+                <div id="lead-time-line" class="col-md-6 achieved-chart-container"></div>
+            </div>
+            <div class="mt-4">
+                <h5 class="mb-4 text-info">概述</h5>
+                <p>B车间 C车间 常山 姜家山 OWE的完成值低于目标，其中常山的OWE完成值最低，为68%</p>
+                <p>本月工作日31天，未完成目标的工作日为 14天，其中 3/17 日OWE仅为 61%</p>
+                <h5 class="mb-4 text-info">环境 - 常山</h5>
+                <p>常山本月完成12款，其中新款8个，返单4款，款式数量和上期持平，但新增款式较上期增加4款，新款转款时间平均为12个小时，旧款转款平均时间为4小时，新款转款时间增加32小时</p>
+                <h5 class="mb-4 text-info">人员 - 常山</h5>
+                <p>常山本月员工出勤率 96%，处于合理范围</p>
+                <h5 class="mb-4 text-info">设备 - 常山</h5>
+                <p>关键设备设备故障 维修时长合计15个小时，处于合理范围</p>
+                <h5 class="mb-4 text-info">物料 - 常山</h5>
+                <p>重要款式001物料出现配送问题，导致等待物料，产线停滞2小时</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-bts" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-info">{{ metric_en_list.4 }} 运营分析</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <div id="bts-bar" class="col-md-6 achieved-chart-container"></div>
+                <div id="bts-line" class="col-md-6 achieved-chart-container"></div>
+            </div>
+            <div class="mt-4">
+                <h5 class="mb-4 text-info">概述</h5>
+                <p>B车间 C车间 常山 姜家山 OWE的完成值低于目标，其中常山的OWE完成值最低，为68%</p>
+                <p>本月工作日31天，未完成目标的工作日为 14天，其中 3/17 日OWE仅为 61%</p>
+                <h5 class="mb-4 text-info">环境 - 常山</h5>
+                <p>常山本月完成12款，其中新款8个，返单4款，款式数量和上期持平，但新增款式较上期增加4款，新款转款时间平均为12个小时，旧款转款平均时间为4小时，新款转款时间增加32小时</p>
+                <h5 class="mb-4 text-info">人员 - 常山</h5>
+                <p>常山本月员工出勤率 96%，处于合理范围</p>
+                <h5 class="mb-4 text-info">设备 - 常山</h5>
+                <p>关键设备设备故障 维修时长合计15个小时，处于合理范围</p>
+                <h5 class="mb-4 text-info">物料 - 常山</h5>
+                <p>重要款式001物料出现配送问题，导致等待物料，产线停滞2小时</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-hot" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-info">{{ metric_en_list.5 }} 运营分析</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <div id="hot-bar" class="col-md-6 achieved-chart-container"></div>
+                <div id="hot-line" class="col-md-6 achieved-chart-container"></div>
+            </div>
+            <div class="mt-4">
+                <h5 class="mb-4 text-info">概述</h5>
+                <p>B车间 C车间 常山 姜家山 OWE的完成值低于目标，其中常山的OWE完成值最低，为68%</p>
+                <p>本月工作日31天，未完成目标的工作日为 14天，其中 3/17 日OWE仅为 61%</p>
+                <h5 class="mb-4 text-info">环境 - 常山</h5>
+                <p>常山本月完成12款，其中新款8个，返单4款，款式数量和上期持平，但新增款式较上期增加4款，新款转款时间平均为12个小时，旧款转款平均时间为4小时，新款转款时间增加32小时</p>
+                <h5 class="mb-4 text-info">人员 - 常山</h5>
+                <p>常山本月员工出勤率 96%，处于合理范围</p>
+                <h5 class="mb-4 text-info">设备 - 常山</h5>
+                <p>关键设备设备故障 维修时长合计15个小时，处于合理范围</p>
+                <h5 class="mb-4 text-info">物料 - 常山</h5>
+                <p>重要款式001物料出现配送问题，导致等待物料，产线停滞2小时</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-rft" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-info">{{ metric_en_list.6 }} 运营分析</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <div id="rft-bar" class="col-md-6 achieved-chart-container"></div>
+                <div id="rft-line" class="col-md-6 achieved-chart-container"></div>
+            </div>
+            <div class="mt-4">
+                <h5 class="mb-4 text-info">概述</h5>
+                <p>B车间 C车间 常山 姜家山 OWE的完成值低于目标，其中常山的OWE完成值最低，为68%</p>
+                <p>本月工作日31天，未完成目标的工作日为 14天，其中 3/17 日OWE仅为 61%</p>
+                <h5 class="mb-4 text-info">环境 - 常山</h5>
+                <p>常山本月完成12款，其中新款8个，返单4款，款式数量和上期持平，但新增款式较上期增加4款，新款转款时间平均为12个小时，旧款转款平均时间为4小时，新款转款时间增加32小时</p>
+                <h5 class="mb-4 text-info">人员 - 常山</h5>
+                <p>常山本月员工出勤率 96%，处于合理范围</p>
+                <h5 class="mb-4 text-info">设备 - 常山</h5>
+                <p>关键设备设备故障 维修时长合计15个小时，处于合理范围</p>
+                <h5 class="mb-4 text-info">物料 - 常山</h5>
+                <p>重要款式001物料出现配送问题，导致等待物料，产线停滞2小时</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-final-rework" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-info">{{ metric_en_list.7 }} 运营分析</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <div id="final-rework-bar" class="col-md-6 achieved-chart-container"></div>
+                <div id="final-rework-line" class="col-md-6 achieved-chart-container"></div>
+            </div>
+            <div class="mt-4">
+                <h5 class="mb-4 text-info">概述</h5>
+                <p>B车间 C车间 常山 姜家山 OWE的完成值低于目标，其中常山的OWE完成值最低，为68%</p>
+                <p>本月工作日31天，未完成目标的工作日为 14天，其中 3/17 日OWE仅为 61%</p>
+                <h5 class="mb-4 text-info">环境 - 常山</h5>
+                <p>常山本月完成12款，其中新款8个，返单4款，款式数量和上期持平，但新增款式较上期增加4款，新款转款时间平均为12个小时，旧款转款平均时间为4小时，新款转款时间增加32小时</p>
+                <h5 class="mb-4 text-info">人员 - 常山</h5>
+                <p>常山本月员工出勤率 96%，处于合理范围</p>
+                <h5 class="mb-4 text-info">设备 - 常山</h5>
+                <p>关键设备设备故障 维修时长合计15个小时，处于合理范围</p>
+                <h5 class="mb-4 text-info">物料 - 常山</h5>
+                <p>重要款式001物料出现配送问题，导致等待物料，产线停滞2小时</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{ metric_data|json_script:"metric-data" }}
+{{ workshop_data|json_script:"workshop-data" }}
+{{ workshops|json_script:"workshop-list" }}
+{{ metric_list|json_script:"metric-list" }}
+{{ metric_en_list|json_script:"metric-en-list" }}
+{% endblock %}
+
+<!-- 右侧侧边栏 控制栏 -->
+{% block control-sidebar %}{% endblock %}
+
+<!-- 文件末尾的 JavaScript 文件-->
+
+{% block script %}
+<script>
+
+document.querySelectorAll('.nav-link').forEach(link => {
+    // 监听每个 .nav-link 的链接，
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+        // 获取链接对应的目标对象的id，比如 #section-1
+        const targetId = this.getAttribute('href');
+        // 获取目标对象
+        const targetSection = document.querySelector(targetId);
+
+        // 获取所有的 .nav-link 链接，移除类 .active
+        document.querySelectorAll('.nav-link').forEach(item => item.classList.remove('active'));
+        // 在被点击的链接（当前链接）上添加类 .active
+        this.classList.add('active')
+
+        // 目标对象滚入视窗，目标对象的起始部位进入默认位置
+        targetSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+
+
+    });
+});
+
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('.workshop-section');
+    let currentSection = '';
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (window.scrollY >= sectionTop - 100) {
+            currentSection = section.getAttribute('id');
+        }
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${currentSection}`)
+    })
+});
+
+const indicatorData = JSON.parse(document.getElementById('metric-data').textContent);
+const workshopData = JSON.parse(document.getElementById('workshop-data').textContent);
+// ['A车间', 'B车间', , ]
+const workshopList = JSON.parse(document.getElementById('workshop-list').textContent);
+// ['owe', 'sam_cost', , ]
+const metricList = JSON.parse(document.getElementById('metric-list').textContent);
+// ['OWE', 'SAM Cost', ,]
+const metricEnList = JSON.parse(document.getElementById('metric-en-list').textContent);
+
+// id="overview-chart" 仪表盘
+function overviewGaugeChart(
+    gaugeContainerId, min, max, metricTarget, gaugeFrontColor, gaugeBackColor, metricUnit, valueColor, metricValue
+) {
+    const metricGaugeChart = echarts.init(document.getElementById(gaugeContainerId));
+    const gaugeOption = {
+        series: [
+            {
+                type: 'gauge',
+                center: ['50%', '60%'],
+                startAngle: 180,
+                endAngle: 0,
+                min: min,
+                max: max,
+                splitNumber: 5,
+                radius: '90%',
+                axisLine: {
+                    lineStyle: {
+                        width: 30,
+                        color: [
+                            [metricTarget, gaugeFrontColor],
+                            [max, gaugeBackColor]
+                        ]
+                    }
+                },
+                pointer: {
+                    itemStyle: {
+                        color: 'black'
+                    },
+                    length: '70%',
+                    width: 2
+                },
+                axisTick: {
+                    show: false
+                },
+                splitLine: {
+                    show: false
+                },
+                axisLabel: {
+                    show: true,
+                    color: 'rgba(0, 0, 0, 0.7)',
+                    distance: -40,
+                    fontSize: 12
+                },
+                detail: {
+                    valueAnimation: true,
+                    fontsize: 24,
+                    offsetCenter: [0, '35'],
+                    formatter: function (value) {
+                        return '{text|当月发生 }' + '{value|' + value + '}{unit|' + metricUnit + '}';
+                    },
+                    rich: {
+                        text: {
+                            color: '#495057',
+                            fontSize: 20
+                        },
+                        value: {
+                            color: valueColor,
+                            fontSize: 24,
+                            fontWeight: 'bold'
+                        },
+                        unit: {
+                            color: valueColor,
+                            fontSize: 24,
+                            fontWeight: 'bold'
+                        }
+
+                    }
+                },
+                data: [
+                    {
+                        value: metricValue
+                    }
+                ]
+            }
+        ]
+    }
+    metricGaugeChart.setOption(gaugeOption);
+    window.addEventListener('resize', function () {
+        metricGaugeChart.resize();
+    });
+}
+
+Object.entries(indicatorData).forEach(([name, data]) => {
+    {#indicatorNames.push(name);#}
+    {#avgMetricValues.push(data.avg_metric_value);#}
+    {#targetValues.push(data.metric_target);#}
+    {#avgMetricColors.push(data.avg_metric_color);#}
+
+    const gaugeContainerId = name.replace(/_/g, '-') + '-gauge';
+    let min = 0;
+    let max = 0;
+    let metricTarget = 0;
+    let gaugeFrontColor = '';
+    let gaugeBackColor = '';
+    const metricUnit = data.metric_unit;
+    const valueColor = data.avg_metric_color;
+    let  metricValue = 0;
+    switch (name) {
+        case 'owe':
+            min = 0;
+            max = 100;
+            {#metricTarget = data.metric_target * 100;#}
+            metricTarget = data.metric_target;
+            gaugeFrontColor = '#F44336';
+            gaugeBackColor = '#4CAF50';
+            metricValue = (data.avg_metric_value * 100).toFixed(2);
+            break;
+        case 'sam_cost':
+            min = 0;
+            max = 1;
+            metricTarget = data.metric_target;
+            gaugeFrontColor = '#4CAF50';
+            gaugeBackColor = '#F44336';
+            metricValue = Number(data.avg_metric_value).toFixed(2);
+            break;
+        case 'wip':
+            min = 0;
+            max = 20;
+            metricTarget = data.metric_target / 20;
+            gaugeFrontColor = '#4CAF50';
+            gaugeBackColor = '#F44336';
+            metricValue = Number(data.avg_metric_value).toFixed(2);
+            break;
+        case 'lead_time':
+            min = 0;
+            max = 20;
+            metricTarget = data.metric_target / 20;
+            gaugeFrontColor = '#4CAF50';
+            gaugeBackColor = '#F44336';
+            metricValue = Number(data.avg_metric_value).toFixed(2);
+            break;
+        case 'bts':
+            min = 0;
+            max = 100;
+            metricTarget = data.metric_target;
+            gaugeFrontColor = '#F44336';
+            gaugeBackColor = '#4CAF50';
+            metricValue = (data.avg_metric_value * 100).toFixed(2);
+            break;
+        case 'hot':
+            min = 0;
+            max = 100;
+            metricTarget = data.metric_target;
+            gaugeFrontColor = '#F44336';
+            gaugeBackColor = '#4CAF50';
+            metricValue = (data.avg_metric_value * 100).toFixed(2);
+            break;
+        case 'rft':
+            min = 0;
+            max = 100;
+            metricTarget = data.metric_target;
+            gaugeFrontColor = '#F44336';
+            gaugeBackColor = '#4CAF50';
+            metricValue = (data.avg_metric_value * 100).toFixed(2);
+            break;
+        case 'final_rework':
+            min = 0;
+            max = 5;
+            metricTarget = data.metric_target / (5 / 100);
+            gaugeFrontColor = '#4CAF50';
+            gaugeBackColor = '#F44336';
+            metricValue = (data.avg_metric_value * 100).toFixed(2);
+            break;
+    }
+
+    overviewGaugeChart(
+        gaugeContainerId, min, max, metricTarget, gaugeFrontColor, gaugeBackColor, metricUnit, valueColor, metricValue
+    );
+});
+
+
+// 运营指标 条形图
+function metricHorizontalBarChart(containerId, metricEn, metricTarget, marker, min, max, colors, categoryData, oweBarData) {
+    const metricBarChartDom = document.getElementById(containerId);
+    const metricBarChart = echarts.init(metricBarChartDom);
+    {#const colors = oweBarData.map(value => value >= 0.75 ? '#52c41a' : '#ff4d4f');#}
+
+    const option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            },
+            formatter: params => {
+                const workshop = params[0].name;
+                const value = params[0].value;
+                {#const color = value > 0.75 ? '#52c41a' : '#ff4d4f';#}
+                const color = colors[params[0].dataIndex];
+                return `
+                    <div style="font-weight: bold">${workshop}</div>
+                    <div>${metricEn}值：<span style="color: ${color}">${(value*100).toFixed(2)}%</span></div>
+                    <div>目标：75%</div>`
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value',
+            min: min,
+            max: max,
+            axisLabel: {
+                formatter: '{value}'
+            },
+            splitLine: {
+                lineStyle: {
+                    type: 'dashed'
+                }
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        yAxis: {
+            type: 'category',
+            data: categoryData,
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        series: [
+            {
+                // name: 'OWE值',
+                name: metricEn,
+                type: 'bar',
+                data: oweBarData,
+                itemStyle: {
+                    color: params => colors[params.dataIndex]
+                },
+                label: {
+                    show: true,
+                    position: 'right',
+                    // formatter: '{c}',
+                    formatter: params => {
+                        return parseFloat(params.value).toFixed(2);
+                    },
+                    color: '#333'
+                },
+                barWidth: '60%',
+                markLine: {
+                    silent: true, //不响应鼠标事件
+                    symbol: 'none',
+                    lineStyle: {
+                        color: '#faad14',
+                        type: 'dashed',
+                        width: 1
+                    },
+                    label: {
+                        position: 'end',
+                        // marker 确定文字格式
+                        formatter: marker,
+                        color: '#fadd14'
+                    },
+                    data: [
+                        {
+                            // 确定 marker 的位置
+                            xAxis: metricTarget
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+
+    metricBarChart.setOption(option);
+    window.addEventListener('resize', () => {
+        metricBarChart.resize();
+    });
+}
+
+let workshopMetricValueList = [];
+let colors = [];
+let metricSet = {}
+const valleySet = {
+    'owe': 0.6,
+    'sam_cost': '0.6',
+    'wip': 8,
+    'lead_time': 8,
+    'bts': 0.6,
+    'hot': 0.6,
+    'rft': 0.6,
+    'final_rework': 0
+}
+const peakSet = {
+    'owe': 0.85,
+    'sam_cost': 0.9,
+    'wip': 16,
+    'lead_time': 16,
+    'bts': 1,
+    'hot': 1,
+    'rft': 1,
+    'final_rework': 0.05
+}
+
+metricList.forEach((metric, index) => {
+    const containerId = metric.replace(/_/g, "-") + '-bar';
+    let dataList = [];
+    let colorList = [];
+    const min = valleySet[metric]
+    const max = peakSet[metric]
+    const metricEn = metricEnList[index]
+    const metricTarget = indicatorData[metric]['metric_target'];
+    const metricUnit = indicatorData[metric]['metric_unit'];
+    const marker = metricUnit === '%' ? metricTarget * 100 + metricUnit : metricTarget + metricUnit;
+    workshopList.forEach((workshop, index, workshops) => {
+        dataEle = workshopData[workshop][metric]['avg_workshop_metric_value'];
+        colorEle = workshopData[workshop][metric]['avg_workshop_metric_color'];
+        dataList.push(dataEle);
+        colorList.push(colorEle);
+    });
+    metricHorizontalBarChart(containerId, metricEn, metricTarget, marker, min, max, colorList, workshopList, dataList);
+});
+
+// 运营指标 折线图
+{#function metricLineChart(containerId, oweLineDates, oweLineData) {#}
+function metricLineChart(containerId, lineColorList, metricLineDates, metricLineData) {
+
+    const metricLineChart = echarts.init(document.getElementById(containerId));
+    const option = {
+        tooltip: {
+            trigger: 'axis',
+            formatter: params => {
+                const date = params[0].axisValue;
+                const value = params[0].data;
+                {#const color = value < 0.75 ? '#ff4d4f' : '#52c41a';#}
+                const color = lineColorList[params[0].dataIndex];
+                return `
+                    <div style="font-weight:bold">${date}</div>
+                    <div>实际完成：<span style="color:${color}">${(value*100).toFixed(2)}%</span></div>
+                    <div>目标值：75%</div>`;
+            }
+        },
+        grid: {
+            left: '3%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: metricLineDates,
+            axisLabel: {
+                interval: 4,
+                rotate: 90
+            }
+        },
+        yAxis: {
+            type: 'value',
+            min: 0.6,
+            max: 0.9,
+            axisLabel: {
+                formatter: '{value}'
+            },
+            splitLine: {
+                lineStyle: {
+                    type: 'dashed'
+                }
+            }
+        },
+        series: [
+            {
+                name: '达成率',
+                type: 'line',
+                smooth: true,
+                symbol: 'circle',
+                symbolSize: 8,
+                itemStyle: {
+                    color: params => {
+                        return params.value < 0.75 ? '#ff4d4f' : '#52c41a';
+                    }
+                },
+                data: metricLineData,
+                lineStyle: {
+                    width: 1
+                },
+                markLine: {
+                    silent: true,
+                    data: [
+                        {
+                            yAxis: 0.75,
+                            lineStyle: {
+                                color: '#faad14',
+                                type: 'dashed'
+                            },
+                            label: {
+                                position: 'end',
+                                formatter: '75%',
+                                color: '#faad14'
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    };
+
+    metricLineChart.setOption(option);
+    window.addEventListener('resize', () => {
+        metricLineChart.resize();
+    });
+}
+let dates = [];
+for(let i=1; i<=31; i++) {
+    dates.push(`3/${i}`);
+}
+const generateDateData = () => {
+    const data = [];
+    let sum = 0;
+
+    for(let i=0; i<31; i++) {
+        const value = (Math.random() * 0.3 + 0.6).toFixed(2);
+        data.push(parseFloat(value));
+        sum += parseFloat(value);
+    }
+
+    const avg = sum / 31;
+    const adjustment = 0.74 - avg;
+
+    return data.map(item => {
+        let adjusted = parseFloat((item + adjustment).toFixed(2));
+        adjusted = Math.max(0.6, Math.min(0.9, adjusted));
+
+        return adjusted
+    });
+}
+const oweLineDate = generateDateData();
+{#metricLineChart('owe-line', dates, oweLineDate);#}
+
+metricList.forEach((metric, index) => {
+    const containerId = metric.replace(/_/g, "-") + '-line';
+    const lineDateName = metric + '_line_date_list';
+    const lineValueName = metric + '_line_value_list';
+    const lineColorName = metric + '_line_color_list';
+
+    const lineDateList = workshopData[lineDateName];
+    const lineValueList = workshopData[lineValueName];
+    const lineColorList = workshopData[lineColorName];
+
+    {#metricLineChart(containerId, lineColorList, lineDateList, oweLineDate)#}
+    metricLineChart(containerId, lineColorList, lineDateList, lineValueList)
+});
+
+
+</script>
+{% endblock %}

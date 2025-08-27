@@ -1,0 +1,18 @@
+{
+    "报工明细": {
+        "subject": "output",
+        "category": "conformity"
+    },
+    "考勤明细": {
+        "subject": "attendance",
+        "category": "conformity"
+    },
+    "单位清单": {
+        "subject": "organs",
+        "category": "middle"
+    },
+    "员工清单": {
+        "subject": "employees",
+        "category": "middle"
+    }
+}

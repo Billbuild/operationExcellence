@@ -1,0 +1,30 @@
+{
+  "id": "3536650",
+  "name": "my_practice",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "3716345",
+      "name": "number-3",
+      "font_class": "number-",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "4767096",
+      "name": "close",
+      "font_class": "close",
+      "unicode": "e7fc",
+      "unicode_decimal": 59388
+    },
+    {
+      "icon_id": "12310198",
+      "name": "person",
+      "font_class": "person",
+      "unicode": "e871",
+      "unicode_decimal": 59505
+    }
+  ]
+}

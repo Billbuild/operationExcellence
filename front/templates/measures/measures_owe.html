@@ -1,0 +1,55 @@
+{% extends 'base/ancestor_factory_workshop.html' %}
+
+
+<!-- 头文件，主要是 css 文件 -->
+{% block head %}{% endblock %}
+
+<!-- 标题 -->
+{% block title %}价值流{% endblock %}
+
+<!-- 内容的头部标题 -->
+{% block contentheader %}{% endblock %}
+
+<!-- 内容 -->
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">效率</h3>
+            <div class="float-right"></div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <button class="btn btn-info" id="daily-sewer-eff" data-filename="daily-sewer-eff">缝制工人每日缝制效率
+                        </button>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <button class="btn btn-info" id="combine-vs-info" data-filename="combine-vs-info">周生产效率.xlsx
+                        </button>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <button class="btn btn-info" id="combine-vs-info" data-filename="combine-vs-info">月生产效率.xlsx
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+<!-- 右侧侧边栏 控制栏 -->
+{% block control-sidebar %}
+    <div>
+        <span style="color: white">I love you</span>
+    </div>
+{% endblock %}
+
+<!-- 文件末尾的 JavaScript 文件-->
+{% block script %}
+    <script src="{% static 'js/measures_owe.min.js' %}"></script>
+{% endblock %}

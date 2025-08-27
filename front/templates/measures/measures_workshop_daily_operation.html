@@ -1,0 +1,163 @@
+{% extends 'base/ancestor_factory_workshop.html' %}
+{% load template_filters %}
+
+<!-- 头文件，主要是 css 文件 -->
+{% block head %}
+{% endblock %}
+
+<!-- 标题 -->
+{% block title %}{% endblock %}
+
+<!-- 内容 -->
+{% block content %}
+<!-- 标题 日期 -->
+<section class="content-header" style="display: none" xmlns="http://www.w3.org/1999/html">
+    <div class="container-fluid">
+        <div class="row">
+            <h4 class="text-muted">{{ factory }} {{ workshop }}</h4>
+        </div>
+    </div>
+</section>
+<section class="content mt-2">
+    <div class="container-fluid">
+        <div class="row col-10 offset-1">
+            <div class="d-flex flex-column">
+                <!-- 运营日报 -->
+                <div class="fs-3 text-secondary mb-1">{{ daily_operation_day }}</div>
+                <!-- 衢州工厂 A车间 -->
+                <div class="mb-4"><h4 class="text-primary">{{ factory }}工厂 {{ workshop }} 生产运营日报</h4></div>
+                <!-- 运营指标 -->
+                <div class="row mt-2">
+                    <div class="mr-2">
+                        <!-- coin -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-coin text-primary" viewBox="0 0 16 16">
+                            <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z"></path>
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+                            <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12"></path>
+                        </svg>
+                    </div>
+                    <div><h5>运营指标</h5></div>
+                </div>
+                <p>
+                    <span>OWE：</span><span class="ml-1 {{ owe_text_color }}">{{ owe_actual_owe | percentage:2 }}</span><span class="text-secondary"> / {{ owe_target_owe | percentage:2 }}；</span>
+                    <span>RFT：</span><span class="text-secondary ml-1">92% / 95%；</span>
+                    <span>BTS：</span><span class="text-secondary ml-1">82.5% / 95%；</span>
+                </p>
+                <!-- 员工出勤 -->
+                <div class="row mt-2">
+                    <div class="mr-2">
+                        <!-- coin -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-coin text-primary" viewBox="0 0 16 16">
+                            <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z"></path>
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+                            <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12"></path>
+                        </svg>
+                    </div>
+                    <div><h5>员工出勤</h5></div>
+                </div>
+                <p>
+                    <span>应出勤人数：</span><span class="text-secondary ml-1 ml-1">35人；</span>
+                    <span>实际出勤人数：</span><span class="text-secondary ml-1 ml-1">34人；</span>
+                    <span>出勤率：</span><span class="text-secondary ml-1 ml-1">97.1%；</span>
+                    <span>操作工出勤：</span><span class="text-secondary ml-1 ml-1">29 / 30人；</span>
+                    <span>辅工出勤：</span><span class="text-secondary ml-1 ml-1">2 / 2人；</span>
+                    <span>物料员出勤：</span><span class="text-secondary ml-1 ml-1">1 / 1人；</span>
+                    <span>QC出勤：</span><span class="text-secondary ml-1 ml-1">1 / 1人；</span>
+                </p>
+                <!-- 关键设备 -->
+                <div class="row mt-2">
+                    <div class="mr-2">
+                        <!-- coin -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-coin text-primary" viewBox="0 0 16 16">
+                            <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z"></path>
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+                            <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12"></path>
+                        </svg>
+                    </div>
+                    <div><h5>关键设备</h5></div>
+                </div>
+                <p>
+                    <span>设备名称：</span><span class="text-secondary ml-1 ml-1">关键设备A；</span>
+                    <span>设备编号：</span><span class="text-secondary ml-1 ml-1">SBBH003；</span>
+                    <span>运行时间：</span><span class="text-secondary ml-1 ml-1">8小时；</span>
+                    <span>设备调试：</span><span class="text-secondary ml-1 ml-1">1小时；</span>
+                    <span>等待停机：</span><span class="text-secondary ml-1 ml-1">1小时；</span>
+                    <span>故障停机：</span><span class="text-secondary ml-1 ml-1">1小时；</span>
+                    <span>零件更换：</span><span class="text-secondary ml-1 ml-1">关键零件B LJBH009；</span>
+                    <span>转款生产：</span><span class="text-secondary ml-1 ml-1">2次；</span>
+                </p>
+                <p>
+                    <span>设备名称：</span><span class="text-secondary ml-1 ml-1">关键设备B；</span>
+                    <span>设备编号：</span><span class="text-secondary ml-1 ml-1">SBBH009；</span>
+                    <span>运行时间：</span><span class="text-secondary ml-1 ml-1">7小时；</span>
+                    <span>设备调试：</span><span class="text-secondary ml-1 ml-1">1小时；</span>
+                    <span>等待停机：</span><span class="text-secondary ml-1 ml-1">2小时；</span>
+                    <span>故障停机：</span><span class="text-secondary ml-1 ml-1">0小时；</span>
+                    <span>零件更换：</span><span class="text-secondary ml-1 ml-1">无；</span>
+                    <span>转款生产：</span><span class="text-secondary ml-1 ml-1">1次； </span>
+                </p>
+                <!-- 生产产量 -->
+                <div class="row mt-2">
+                    <div class="mr-2">
+                        <!-- coin -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-coin text-primary" viewBox="0 0 16 16">
+                            <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z"></path>
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+                            <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12"></path>
+                        </svg>
+                    </div>
+                    <div><h5>产量和质量</h5></div>
+                </div>
+                <p>
+                    <span>款式名称：</span><span class="text-secondary ml-1 ml-1">核心款式A；</span>
+                    <span>款式编码：</span><span class="text-secondary ml-1 ml-1">KSBH007；</span>
+                    <span>计划产量：</span><span class="text-secondary ml-1 ml-1">100件；</span>
+                    <span>完成数量：</span><span class="text-secondary ml-1 ml-1">75件；</span>
+                    <span>疵品数量：</span><span class="text-secondary ml-1 ml-1">8件；</span>
+                    <span>疵品类型A：</span><span class="text-secondary ml-1 ml-1">4件；</span>
+                    <span>疵品类型B：</span><span class="text-secondary ml-1 ml-1">2件；</span>
+                    <span>疵品类型C：</span><span class="text-secondary ml-1 ml-1">2件；</span>
+                </p>
+                <p>
+                    <span>款式名称：</span><span class="text-secondary ml-1 ml-1">核心款式B；</span>
+                    <span>款式编码：</span><span class="text-secondary ml-1 ml-1">KSBH007；</span>
+                    <span>计划产量：</span><span class="text-secondary ml-1 ml-1">100件；</span>
+                    <span>完成数量：</span><span class="text-secondary ml-1 ml-1">90件；</span>
+                    <span>疵品数量：</span><span class="text-secondary ml-1 ml-1">8件；</span>
+                    <span>疵品类型A：</span><span class="text-secondary ml-1 ml-1">4件；</span>
+                    <span>疵品类型B：</span><span class="text-secondary ml-1 ml-1">2件；</span>
+                    <span> 疵品类型C：</span><span class="text-secondary ml-1 ml-1">2件；</span>
+                </p>
+                <!-- 问题反馈 -->
+                <div class="row mt-2">
+                    <div class="mr-2">
+                        <!-- coin -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="currentColor" class="bi bi-coin text-primary" viewBox="0 0 16 16">
+                            <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z"></path>
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+                            <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12"></path>
+                        </svg>
+                    </div>
+                    <div><h5>问题反馈</h5></div>
+                </div>
+                <p>
+                    <span>低效人员：</span><span class="text-secondary ml-1 ml-1">3人；</span>
+                    <span>停滞时间：</span><span class="text-secondary ml-1 ml-1">2小时；</span>
+                    <span>瑕疵物料：</span><span class="text-secondary ml-1 ml-1">关键物料A WLBH009；</span>
+                    <span>工艺变更：</span><span class="text-secondary ml-1 ml-1">关键款式B KSBH007；</span>
+                    <span>报废产品：</span><span class="text-secondary ml-1 ml-1">0件；</span>
+                    <span>安全事故：</span><span class="text-secondary ml-1 ml-1">0件；</span>
+                    <span>5S管理：</span><span class="text-secondary ml-1 ml-1">7分；</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+<!-- 右侧侧边栏 控制栏 -->
+{% block control-sidebar %}{% endblock %}
+
+<!-- 文件末尾的 JavaScript 文件-->
+{% block script %}{% endblock %}
+

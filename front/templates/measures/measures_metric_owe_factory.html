@@ -1,0 +1,166 @@
+{% extends 'base/ancestor_factory_workshop.html' %}
+{% load template_filters %}
+
+<!-- 头文件，主要是 css 文件 -->
+{% block head %}{% endblock %}
+
+<!-- 标题 -->
+{% block title %}{% endblock %}
+
+<!-- 内容 -->
+{% block content %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1"><h4 class="text-muted">OWE</h4></div>
+            <div>
+                <span class="mr-1">2025-03-02</span>
+                <span>-</span>
+                <span class="ml-1">2025-03-02</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row border-bottom border-info" >
+            <div class="col-md-1"></div>
+            <div class="col-md-6">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-center"><small><strong>工厂名称</strong></small></th>
+                            <th class="text-center"><small><strong>目标</strong></small></th>
+                            <th class="text-center"><small><strong>实际发生</strong></small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center"><small>01衢州</small></td>
+                            <td class="text-center"><small>0.75</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><small>02龙游</small></td>
+                            <td class="text-center"><small>0.75</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><small>03越南</small></td>
+                            <td class="text-center"><small>0.75</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><small>04孟加拉</small></td>
+                            <td class="text-center"><small>0.75</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4 pl-5">
+                <form action="#">
+                    <div class="form-group-sm">
+                        <label for="oweStartDate"><small><strong>开始日期</strong></small></label>
+                        <input type="text" id="oweStartDate" name="owe_start_date" class="form-control form-control-sm" placeholder="开始日期">
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="oweEndDate"><small><strong>结束日期</strong></small></label>
+                        <input type="text" id="oweEndDate" name="owe_end_date" class="form-control form-control-sm" placeholder="结束日期">
+                    </div>
+                    <div class="form-group-sm pt-2">
+                        <button type="reset" class="btn btn-outline-primary btn-sm"><small>重置</small></button>
+                        <button type="submit" class="btn btn-outline-primary btn-sm"><small>提交</small></button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-1"></div>
+
+        </div>
+    </div>
+</section>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1"><h4 class="text-muted">OWE</h4></div>
+            <div>
+                <span class="mr-1">2025-03</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-6">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-center"><small><strong>工厂名称</strong></small></th>
+                            <th class="text-center"><small><strong>MTD</strong></small></th>
+                            <th class="text-center"><small><strong>YTD</strong></small></th>
+                            <th class="text-center"><small><strong>上期</strong></small></th>
+                            <th class="text-center"><small><strong>去年同期</strong></small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center"><small>01衢州</small></td>
+                            <td class="text-center"><small>0.8</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><small>02龙游</small></td>
+                            <td class="text-center"><small>0.8</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><small>03越南</small></td>
+                            <td class="text-center"><small>0.8</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center"><small>04孟加拉</small></td>
+                            <td class="text-center"><small>0.8</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                            <td class="text-center"><small>0.78</small></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4 pl-5">
+                <form action="#">
+                    <div class="form-group-sm">
+                        <label for="oweYear"><small><strong>年份</strong></small></label>
+                        <input type="text" id="oweYear" name="owe_year" class="form-control form-control-sm" placeholder="选择年份">
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="oweMonth"><small><strong>月份</strong></small></label>
+                        <input type="text" id="oweMonth" name="owe_month" class="form-control form-control-sm" placeholder="选择月份">
+                    </div>
+                    <div class="form-group-sm pt-2">
+                        <button type="reset" class="btn btn-outline-primary btn-sm"><small>重置</small></button>
+                        <button type="submit" class="btn btn-outline-primary btn-sm"><small>提交</small></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+<!-- 右侧侧边栏 控制栏 -->
+{% block control-sidebar %}{% endblock %}
+
+<!-- 文件末尾的 JavaScript 文件-->
+{% block script %}{% endblock %}

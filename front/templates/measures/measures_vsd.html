@@ -1,0 +1,45 @@
+{% extends 'base/ancestor_factory_workshop.html' %}
+
+
+<!-- 头文件，主要是 css 文件 -->
+{% block head %}{% endblock %}
+
+<!-- 标题 -->
+{% block title %}价值流{% endblock %}
+
+<!-- 内容的头部标题 -->
+{% block contentheader %}{% endblock %}
+
+<!-- 内容 -->
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">价值流</h3>
+            <div class="float-right"></div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <button class="btn btn-info" id="dept-excel" data-filename="dept-excel">生成 部门信息流.xlsx
+                        </button>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <button class="btn btn-info" id="combine-vs-info" data-filename="combine-vs-info">生成 信息流(合并).xlsx
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+<!-- 右侧侧边栏 控制栏 -->
+{% block control-sidebar %}{% endblock %}
+
+<!-- 文件末尾的 JavaScript 文件-->
+{% block script %}
+    <script src="{% static 'js/exl_value_steam.min.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,831 @@
+{% extends 'base/ancestor_factory_workshop.html' %}
+{% load template_filters %}
+
+<!-- 头文件，主要是 css 文件 -->
+{% block head %}
+<style>
+{# 导航 #}
+.workshop-nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+.workshop-nav ul {
+    display: flex;
+    gap: 15px;
+    padding: 0.5rem;
+    margin: 0;
+    list-style: none;
+}
+.workshop-nav a {
+    text-decoration: none;
+    color: #333;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+.workshop-nav a.active {
+    background: #2196F3;
+    color: white;
+}
+{# 导航 #}
+
+.workshop-section {
+    {#padding: 100px 20px 40px;#}
+    padding-top: 60px;
+    min-height: 100vh;
+}
+
+{# 达成率 #}
+.achieved-metric-header {
+    background-color: white;
+}
+.slogan {
+    color: #6c757d;
+    font-size: 14px;
+}
+#achieved-target-owe {
+    background-image: url("{% static 'images/texture-5.jpg' %}");
+}
+#achieved-target-samcost {
+    background-image: url("{% static 'images/texture-6.jpg' %}");
+}
+#achieved-target-wip {
+    background-image: url("{% static 'images/texture-4.png' %}");
+}
+#achieved-target-leadtime {
+    background-image: url("{% static 'images/texture-7.jpg' %}");
+}
+#achieved-target-bts {
+    background-image: url("{% static 'images/texture-9.jpg' %}");
+}
+#achieved-target-hot {
+    background-image: url("{% static 'images/texture-8.jpg' %}");
+}
+#achieved-target-rft {
+    background-image: url("{% static 'images/texture-11.jpg' %}");
+}
+#achieved-target-finalreject {
+    background-image: url("{% static 'images/texture-10.jpg' %}");
+}
+.achieved-metric-container {
+    border-bottom: 2px solid #e2e6ea;
+}
+.achieved-metric-container:nth-child(odd) {
+    border-right: 2px solid #e2e6ea;
+}
+.achieved-metric-container:hover {
+    background-color: white;
+}
+{# 右侧背景图片 #}
+.achieved-target-background {
+    background-size: cover;
+    background-position: center;
+    height: 220px;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 2px 2px 10px rgb(0, 0, 0, 0.5);
+}
+{#右侧背景图片上方的title 例如OWE#}
+.achieved-metric-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    letter-spacing: 5px;
+    font-family: 'Arial Black', sans-serif;
+}
+{# 左侧 metric 的数据，例如目标值 完成值 达成率#}
+.achieved-metric-data {
+    {#background-color: white;#}
+    padding-left: 25px;
+}
+.metric-card {
+    margin-bottom: 25px;
+}
+.metric-name {
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+.metric-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #212529;
+}
+.achievement-medium {
+    color: #fd7e14;
+}
+.achievement-high {
+    color: #198754;
+}
+{# 达成率 #}
+
+{# OWE #}
+.achieved-chart-container {
+    height: 300px;
+    border-bottom: 2px solid #e2e6ea;
+}
+.achieved-chart-container:nth-child(odd) {
+    border-right: 2px solid #e2e6ea;
+}
+.achieved-chart-container:hover {
+    background-color: white;
+}
+{# OWE #}
+
+</style>
+{% endblock %}
+
+<!-- 标题 -->
+{% block title %}{% endblock %}
+
+<!-- 内容 -->
+{% block content %}
+<nav class="workshop-nav">
+    <ul>
+        <li class="nav-item">
+            <a href="#section-achieved" class="nav-link active">
+                达成率
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#section-owe" class="nav-link">
+                OWE
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#section-samcost" class="nav-link">
+                SAM Cost
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#section-wip" class="nav-link">
+                WIP
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#section-leadtime" class="nav-link">
+                Lead Time
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#section-bts" class="nav-link">
+                BTS
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#section-hot" class="nav-link">
+                HOT
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#section-rft" class="nav-link">
+                RFT
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#section-finalreject" class="nav-link">
+                Final Reject
+            </a>
+        </li>
+    </ul>
+</nav>
+<section id="section-achieved" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-primary">运营指标达成率</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <div class="col-md-6 pt-5 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="row">
+                        <div id="achieved-target-owe" class="col-md-4 achieved-target-background">
+                            <div class="achieved-metric-title">OWE</div>
+                        </div>
+                        <div class="col-md-8 achieved-metric-data">
+                            <table>
+                                <tbody>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">目标</td>
+                                        <td class="metric-value text-muted pl-4">75%</td>
+                                    </tr>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">当月完成</td>
+                                        <td class="metric-value text-danger pl-4">74%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">当月达成率</td>
+                                        <td class="metric-value text-danger pl-4">98.7%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD完成</td>
+                                        <td class="metric-value text-success pl-4">76%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD达成率</td>
+                                        <td class="metric-value text-success pl-4">101.3%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 pt-5 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="row">
+                        <div id="achieved-target-samcost" class="col-md-4 achieved-target-background">
+                            <div class="achieved-metric-title">SAM Cost</div>
+                        </div>
+                        <div class="col-md-8 achieved-metric-data">
+                            <table>
+                                <tbody>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">目标</td>
+                                        <td class="metric-value text-muted pl-4">75%</td>
+                                    </tr>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">当月完成</td>
+                                        <td class="metric-value text-danger pl-4">74%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">当月达成率</td>
+                                        <td class="metric-value text-danger pl-4">98.7%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD完成</td>
+                                        <td class="metric-value text-success pl-4">76%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD达成率</td>
+                                        <td class="metric-value text-success pl-4">101.3%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 pt-5 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="row">
+                        <div id="achieved-target-wip" class="col-md-4 achieved-target-background">
+                            <div class="achieved-metric-title">WIP</div>
+                        </div>
+                        <div class="col-md-8 achieved-metric-data">
+                            <table>
+                                <tbody>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">目标</td>
+                                        <td class="metric-value text-muted pl-4">75%</td>
+                                    </tr>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">当月完成</td>
+                                        <td class="metric-value text-danger pl-4">74%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">当月达成率</td>
+                                        <td class="metric-value text-danger pl-4">98.7%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD完成</td>
+                                        <td class="metric-value text-success pl-4">76%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD达成率</td>
+                                        <td class="metric-value text-success pl-4">101.3%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 pt-5 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="row">
+                        <div id="achieved-target-leadtime" class="col-md-4 achieved-target-background">
+                            <div class="achieved-metric-title">Lead Time</div>
+                        </div>
+                        <div class="col-md-8 achieved-metric-data">
+                            <table>
+                                <tbody>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">目标</td>
+                                        <td class="metric-value text-muted pl-4">75%</td>
+                                    </tr>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">当月完成</td>
+                                        <td class="metric-value text-danger pl-4">74%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">当月达成率</td>
+                                        <td class="metric-value text-danger pl-4">98.7%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD完成</td>
+                                        <td class="metric-value text-success pl-4">76%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD达成率</td>
+                                        <td class="metric-value text-success pl-4">101.3%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 pt-5 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="row">
+                        <div id="achieved-target-bts" class="col-md-4 achieved-target-background">
+                            <div class="achieved-metric-title">BTS</div>
+                        </div>
+                        <div class="col-md-8 achieved-metric-data">
+                            <table>
+                                <tbody>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">目标</td>
+                                        <td class="metric-value text-muted pl-4">75%</td>
+                                    </tr>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">当月完成</td>
+                                        <td class="metric-value text-danger pl-4">74%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">当月达成率</td>
+                                        <td class="metric-value text-danger pl-4">98.7%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD完成</td>
+                                        <td class="metric-value text-success pl-4">76%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD达成率</td>
+                                        <td class="metric-value text-success pl-4">101.3%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 pt-5 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="row">
+                        <div id="achieved-target-bts" class="col-md-4 achieved-target-background">
+                            <div class="achieved-metric-title">HOT</div>
+                        </div>
+                        <div class="col-md-8 achieved-metric-data">
+                            <table>
+                                <tbody>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">目标</td>
+                                        <td class="metric-value text-muted pl-4">75%</td>
+                                    </tr>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">当月完成</td>
+                                        <td class="metric-value text-danger pl-4">74%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">当月达成率</td>
+                                        <td class="metric-value text-danger pl-4">98.7%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD完成</td>
+                                        <td class="metric-value text-success pl-4">76%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD达成率</td>
+                                        <td class="metric-value text-success pl-4">101.3%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 pt-5 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="row">
+                        <div id="achieved-target-rft" class="col-md-4 achieved-target-background">
+                            <div class="achieved-metric-title">RFT</div>
+                        </div>
+                        <div class="col-md-8 achieved-metric-data">
+                            <table>
+                                <tbody>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">目标</td>
+                                        <td class="metric-value text-muted pl-4">75%</td>
+                                    </tr>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">当月完成</td>
+                                        <td class="metric-value text-danger pl-4">74%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">当月达成率</td>
+                                        <td class="metric-value text-danger pl-4">98.7%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD完成</td>
+                                        <td class="metric-value text-success pl-4">76%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD达成率</td>
+                                        <td class="metric-value text-success pl-4">101.3%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 pt-5 pb-5 pl-5 pr-5 achieved-metric-container">
+                    <div class="row">
+                        <div id="achieved-target-finalreject" class="col-md-4 achieved-target-background">
+                            <div class="achieved-metric-title">Final Reject</div>
+                        </div>
+                        <div class="col-md-8 achieved-metric-data">
+                            <table>
+                                <tbody>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">目标</td>
+                                        <td class="metric-value text-muted pl-4">75%</td>
+                                    </tr>
+                                    <tr class="metric-card">
+                                        <td class="metric-name">当月完成</td>
+                                        <td class="metric-value text-danger pl-4">74%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">当月达成率</td>
+                                        <td class="metric-value text-danger pl-4">98.7%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD完成</td>
+                                        <td class="metric-value text-success pl-4">76%</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="metric-name">YTD达成率</td>
+                                        <td class="metric-value text-success pl-4">101.3%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-owe" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-info">OWE 运营分析</h3>
+        <p class="text-muted">有效时间利用率 速率 直接比 合格率是 OWE 的重要组成因素</p>
+    </div>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <div id="owe-bar" class="col-md-6 achieved-chart-container"></div>
+                <div id="owe-line" class="col-md-6 achieved-chart-container"></div>
+            </div>
+            <div class="mt-4">
+                <h5 class="mb-4 text-info">概述</h5>
+                <p>B车间 C车间 常山 姜家山 OWE的完成值低于目标，其中常山的OWE完成值最低，为68%</p>
+                <p>本月工作日31天，未完成目标的工作日为 14天，其中 3/17 日OWE仅为 61%</p>
+                <h5 class="mb-4 text-info">环境 - 常山</h5>
+                <p>常山本月完成12款，其中新款8个，返单4款，款式数量和上期持平，但新增款式较上期增加4款，新款转款时间平均为12个小时，旧款转款平均时间为4小时，新款转款时间增加32小时</p>
+                <h5 class="mb-4 text-info">人员 - 常山</h5>
+                <p>常山本月员工出勤率 96%，处于合理范围</p>
+                <h5 class="mb-4 text-info">设备 - 常山</h5>
+                <p>关键设备设备故障 维修时长合计15个小时，处于合理范围</p>
+                <h5 class="mb-4 text-info">物料 - 常山</h5>
+                <p>重要款式001物料出现配送问题，导致等待物料，产线停滞2小时</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="section-samcost" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-info">SAM Cost 运营分析</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+</section>
+<section id="section-wip" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-info">WIP 运营分析</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+</section>
+<section id="section-leadtime" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-info">Lead Time 运营分析</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+</section>
+<section id="section-bts" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-info">BTS 运营分析</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+</section>
+<section id="section-hot" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-info">HOT 运营分析</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+</section>
+<section id="section-rft" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-info">RFT 运营分析</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+</section>
+<section id="section-finalreject" class="workshop-section">
+    <div class="achieved-metric-header text-center pt-3 pb-1">
+        <p class="slogan mb-3">2025年03月 01衢州工厂</p>
+        <h3 class="mb-3 text-info">Final Reject 运营分析</h3>
+        <p class="text-muted">运营指标达成率包括: 当月运营指标的达成率和YTD运营指标的达成率</p>
+    </div>
+</section>
+{% endblock %}
+
+<!-- 右侧侧边栏 控制栏 -->
+{% block control-sidebar %}{% endblock %}
+
+<!-- 文件末尾的 JavaScript 文件-->
+
+{% block script %}
+<script>
+{#import {queryDataIndex} from "echarts/lib/util/model";#}
+
+document.querySelectorAll('.nav-link').forEach(link => {
+    // 监听每个 .nav-link 的链接，
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+        // 获取链接对应的目标对象的id，比如 #section-1
+        const targetId = this.getAttribute('href');
+        // 获取目标对象
+        const targetSection = document.querySelector(targetId);
+        console.log(targetId)
+
+        // 获取所有的 .nav-link 链接，移除类 .active
+        document.querySelectorAll('.nav-link').forEach(item => item.classList.remove('active'));
+        // 在被点击的链接（当前链接）上添加类 .active
+        this.classList.add('active')
+
+        // 目标对象滚入视窗，目标对象的起始部位进入默认位置
+        targetSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+
+
+    });
+});
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('.workshop-section');
+    let currentSection = '';
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (window.scrollY >= sectionTop - 100) {
+            currentSection = section.getAttribute('id');
+        }
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${currentSection}`)
+    })
+});
+
+function initOweHorizontalBarChart(containerId, categoryData, oweBarData) {
+    const oweBarChartDom = document.getElementById(containerId);
+    const oweBarChart = echarts.init(oweBarChartDom);
+    const colors = oweBarData.map(value => value >= 0.75 ? '#52c41a' : '#ff4d4f');
+
+    const option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        formatter: params => {
+            const workshop = params[0].name;
+            const value = params[0].value;
+            const color = value > 0.75 ? '#52c41a' : '#ff4d4f';
+            return `
+                <div style="font-weight: bold">${workshop}</div>
+                <div>OWE值：<span style="color: ${color}">${(value*100).toFixed(2)}%</span></div>
+                <div>目标：75%</div>`
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value',
+            min: 0.6,
+            max: 0.85,
+            axisLabel: {
+                formatter: '{value}'
+            },
+            splitLine: {
+                lineStyle: {
+                    type: 'dashed'
+                }
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        yAxis: {
+            type: 'category',
+            data: categoryData,
+            axisTick: {
+                alignWithLabel: true
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        series: [
+            {
+                name: 'OWE值',
+                type: 'bar',
+                data: oweBarData,
+                itemStyle: {
+                    color: params => colors[params.dataIndex]
+                },
+                label: {
+                    show: true,
+                    position: 'right',
+                    formatter: '{c}',
+                    color: '#333'
+                },
+                barWidth: '60%',
+                markLine: {
+                    silent: true, //不响应鼠标事件
+                    symbol: 'none',
+                    lineStyle: {
+                        color: '#faad14',
+                        type: 'dashed',
+                        width: 1
+                    },
+                    label: {
+                        position: 'end',
+                        formatter: '75%',
+                        color: '#fadd14'
+                    },
+                    data: [
+                        {
+                            xAxis: 0.75
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+
+    oweBarChart.setOption(option);
+    window.addEventListener('resize', () => {
+        oweBarChart.resize();
+    });
+}
+const workshops = ['A车间', 'B车间', 'C车间', 'D车间', 'E车间', '常山', '姜家山', '莲花'];
+const oweValue = [0.76, 0.7, 0.72, 0.78, 0.8, 0.68, 0.71, 0.77];
+initOweHorizontalBarChart('owe-bar', workshops, oweValue)
+
+function initOweLineChart(containerId, oweLineDates, oweLineData) {
+
+    const oweLineChart = echarts.init(document.getElementById(containerId));
+    const option = {
+        tooltip: {
+            trigger: 'axis',
+            formatter: params => {
+                const date = params[0].axisValue;
+                const value = params[0].data;
+                const color = value < 0.75 ? '#ff4d4f' : '#52c41a';
+                return `
+                    <div style="font-weight:bold">${date}</div>
+                    <div>实际完成：<span style="color:${color}">${(value*100).toFixed(2)}%</span></div>
+                    <div>目标值：75%</div>`;
+            }
+        },
+        grid: {
+            left: '3%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: oweLineDates,
+            axisLabel: {
+                interval: 4,
+                rotate: 90
+            }
+        },
+        yAxis: {
+            type: 'value',
+            min: 0.6,
+            max: 0.9,
+            axisLabel: {
+                formatter: '{value}'
+            },
+            splitLine: {
+                lineStyle: {
+                    type: 'dashed'
+                }
+            }
+        },
+        series: [
+            {
+                name: '达成率',
+                type: 'line',
+                smooth: true,
+                symbol: 'circle',
+                symbolSize: 8,
+                itemStyle: {
+                    color: params => {
+                        return params.value < 0.75 ? '#ff4d4f' : '#52c41a';
+                    }
+                },
+                data: oweLineData,
+                lineStyle: {
+                    width: 1
+                },
+                markLine: {
+                    silent: true,
+                    data: [
+                        {
+                            yAxis: 0.75,
+                            lineStyle: {
+                                color: '#faad14',
+                                type: 'dashed'
+                            },
+                            label: {
+                                position: 'end',
+                                formatter: '75%',
+                                color: '#faad14'
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    };
+
+    oweLineChart.setOption(option);
+    window.addEventListener('resize', () => {
+        oweLineChart.resize();
+    });
+}
+let dates = [];
+for(let i=1; i<=31; i++) {
+    dates.push(`3/${i}`);
+}
+const generateDateData = () => {
+    const data = [];
+    let sum = 0;
+
+    for(let i=0; i<31; i++) {
+        const value = (Math.random() * 0.3 + 0.6).toFixed(2);
+        data.push(parseFloat(value));
+        sum += parseFloat(value);
+    }
+
+    const avg = sum / 31;
+    const adjustment = 0.74 - avg;
+
+    return data.map(item => {
+        let adjusted = parseFloat((item + adjustment).toFixed(2));
+        adjusted = Math.max(0.6, Math.min(0.9, adjusted));
+
+        return adjusted
+    });
+}
+const oweLineDate = generateDateData();
+initOweLineChart('owe-line', dates, oweLineDate);
+
+
+
+</script>
+{% endblock %}

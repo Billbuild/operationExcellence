@@ -1,0 +1,141 @@
+{% extends 'base/ancestor_factory_workshop.html' %}
+{% load template_filters %}
+
+<!-- 头文件，主要是 css 文件 -->
+{% block head %}{% endblock %}
+
+<!-- 标题 -->
+{% block title %}{% endblock %}
+
+<!-- 内容 -->
+{% block content %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1"><h4 class="text-muted">OWE</h4></div>
+            <div>
+                <span class="mr-1">{{ start_date }}</span>
+                <span>-</span>
+                <span class="ml-1">{{ end_date }}</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+{#        <div class="row border-bottom border-info" >#}
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div id="data-container" class="col-md-6">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-center"><small><strong>工厂名称</strong></small></th>
+                            <th class="text-center"><small><strong>车间名称</strong></small></th>
+                            <th class="text-center"><small><strong>目标</strong></small></th>
+                            <th class="text-center"><small><strong>实际发生</strong></small></th>
+                            <th class="text-center"><small><strong>MTD</strong></small></th>
+                            <th class="text-center"><small><strong>YTD</strong></small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in items %}
+                            <tr>
+                                <td class="text-center"><small>{{ row.factory }}</small></td>
+                                <td class="text-center"><small>{{ row.workshop }}</small></td>
+                                <td class="text-center"><small>{{ row.target }}</small></td>
+                                <td class="text-center {{ row.color }} "><small>{{ row.eff }}</small></td>
+                                <td class="text-center {{ row.color }} "><small>{{ row.mtd | decimal:2 }}</small></td>
+                                <td class="text-center {{ row.color }} "><small>{{ row.ytd | decimal:2}}</small></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-sm justify-content-sm-start">
+                        {% if items.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ items.previous_page_number }}" onclick="loadPage(event, {{ items.previous_page_number }})"><small>上一页</small></a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1"><small>上一页</small></a>
+                            </li>
+                        {% endif %}
+                        {% for num in items.paginator.page_range %}
+                            <li class="page-item {% if items.number == num %}active{% endif %}">
+                                <a class="page-link" href="?page={{ num }}" onclick="loadPage(event, {{ num }})"><small>{{ num }}</small></a>
+                            </li>
+{#                            {% if items.number == num %}#}
+{#                                <li class="page-item active">#}
+{#                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>#}
+{#                                </li>#}
+{#                            {% else %}#}
+{#                                <li class="page-item">#}
+{#                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>#}
+{#                                </li>#}
+{#                            {% endif %}#}
+                        {% endfor %}
+                        {% if items.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ items.next_page_number }}" onclick="loadPage(event, {{ items.next_page_number }})"><small>下一页</small></a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1"><small>下一页</small></a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-md-4 pl-5">
+                <form action="#">
+                    <div class="form-group-sm">
+                        <label for="oweStartDate"><small><strong>开始日期</strong></small></label>
+                        <input type="text" id="oweStartDate" name="owe_start_date" class="form-control form-control-sm" placeholder="开始日期">
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="oweEndDate"><small><strong>结束日期</strong></small></label>
+                        <input type="text" id="oweEndDate" name="owe_end_date" class="form-control form-control-sm" placeholder="结束日期">
+                    </div>
+                    <div class="form-group-sm pt-2">
+                        <button type="reset" class="btn btn-outline-primary btn-sm"><small>重置</small></button>
+                        <button type="submit" class="btn btn-outline-primary btn-sm"><small>提交</small></button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+<!-- 右侧侧边栏 控制栏 -->
+{% block control-sidebar %}{% endblock %}
+
+<!-- 文件末尾的 JavaScript 文件-->
+{% block script %}
+<script>
+// 加载分页数据
+function loadPage(event, page) {
+    event.preventDefault();  // 阻止默认跳转
+    // 通过参数传递 page
+    const url = `?page=${page}`;
+
+    $.ajax({
+        url: url,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"  // 标记为 Ajax 请求
+        },
+        success: function(data) {
+            // 替换表格和分页部分
+            $("#data-container").html(data);
+        },
+        error: function() {
+            alert("加载数据失败，请重试！");
+        }
+    });
+}
+</script>
+{% endblock %}

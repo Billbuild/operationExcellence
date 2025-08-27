@@ -1,0 +1,4 @@
+class Ground {
+    constructor() {
+    }
+}

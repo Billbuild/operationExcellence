@@ -1,0 +1,60 @@
+{% load template_filters %}
+
+{#<p class="subtitle">{{ end_date }}</p>#}
+{#<h4 class="mb-3">各车间 OWE 运营情况</h4>#}
+{#<p class="text-muted">介绍 当日 MTD YTD 同期 上期的运营情况，以便更全面的比较</p>#}
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th class="text-center"><small><strong>工厂名称</strong></small></th>
+            <th class="text-center"><small><strong>车间名称</strong></small></th>
+            <th class="text-center"><small><strong>目标</strong></small></th>
+            <th class="text-center"><small><strong>实际发生</strong></small></th>
+            <th class="text-center"><small><strong>MTD</strong></small></th>
+            <th class="text-center"><small><strong>YTD</strong></small></th>
+            <th class="text-center"><small><strong>上期</strong></small></th>
+            <th class="text-center"><small><strong>同期</strong></small></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+            <tr>
+                <td class="text-center"><small>{{ item.factory }}</small></td>
+                <td class="text-center"><small>{{ item.workshop }}</small></td>
+                <td class="text-center"><small>{{ item.target }}</small></td>
+                <td class="text-center {{ item.owe_color }}"><small>{{ item.eff | decimal:2 }}</small></td>
+                <td class="text-center {{ item.mtd_color }}"><small>{{ item.mtd | decimal:2 }}</small></td>
+                <td class="text-center {{ item.ytd_color }}"><small>{{ item.ytd | decimal:2 }}</small></td>
+                <td class="text-center"><small>0.78</small></td>
+                <td class="text-center"><small>0.78</small></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<nav aria-label="Page navigation">
+    <ul class="pagination pagination-sm justify-content-sm-start">
+        {% if items.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ items.previous_page_number }}" onclick="loadPage(event, {{ items.previous_page_number }})"><small>上一页</small></a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1"><small>上一页</small></a>
+            </li>
+        {% endif %}
+        {% for num in items.paginator.page_range %}
+            <li class="page-item {% if items.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}" onclick="loadPage(event, {{ num }})"><small>{{ num }}</small></a>
+            </li>
+        {% endfor %}
+        {% if items.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ items.next_page_number }}" onclick="loadPage(event, {{ items.next_page_number }})"><small>下一页</small></a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1"><small>下一页</small></a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>

@@ -1,0 +1,45 @@
+{% extends 'iframe.html' %}
+{% block content %}
+<div class="card card-primary">
+  <div class="card-header">
+    <h3 class="card-title">单位运营指标设置</h3>
+  </div>
+  <div class="card-body">
+    <form>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>工厂</label>
+            <select class="form-control" placeholder="请选择工厂">
+              <option value="">请选择工厂</option>
+              <option>工厂A</option>
+              <option>工厂B</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>车间</label>
+            <select class="form-control" placeholder="请选择车间">
+              <option value="">请选择车间</option>
+              <option>车间1</option>
+              <option>车间2</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>运营指标</label>
+            <select class="form-control" placeholder="请选择运营指标">
+              <option value="">请选择运营指标</option>
+              <option>生产效率</option>
+              <option>良品率</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">提交</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
